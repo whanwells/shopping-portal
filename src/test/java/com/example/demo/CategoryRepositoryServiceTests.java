@@ -23,13 +23,17 @@ class CategoryRepositoryServiceTests {
 
     @Test
     void findsAllCategories() {
-        when(repository.findAll()).thenReturn(List.of(new Category(1L, "foo")));
+        when(repository.findAll()).thenReturn(List.of(createCategory()));
         assertThat(service.findAll()).hasSize(1);
     }
 
     @Test
     void findsCategoryById() {
-        when(repository.findById(1L)).thenReturn(Optional.of(new Category(1L, "foo")));
+        when(repository.findById(1L)).thenReturn(Optional.of(createCategory()));
         assertThat(service.findById(1L)).isPresent();
+    }
+
+    private static Category createCategory() {
+        return new Category(1L, "foo");
     }
 }
