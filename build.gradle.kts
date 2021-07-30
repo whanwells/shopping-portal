@@ -35,6 +35,8 @@ tasks.jacocoTestReport {
 }
 
 tasks.jacocoTestCoverageVerification {
+    dependsOn(tasks.jacocoTestReport)
+
     violationRules {
         rule {
             element = "CLASS"
