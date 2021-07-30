@@ -1,13 +1,21 @@
 package com.example.demo;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class ProductTests {
+
+    @Mock
+    private Category category;
 
     @Test
     void constructsWithNoArgs() {
@@ -26,7 +34,6 @@ class ProductTests {
     @Test
     void constructsWithAllProperties() {
         var date = LocalDate.now();
-        var category = new Category(1L, "foo");
         var product = new Product(1L, category, "bar", date, 9.99, 5);
 
         assertSoftly(softly -> {
@@ -42,7 +49,6 @@ class ProductTests {
     @Test
     void constructsWithoutId() {
         var date = LocalDate.now();
-        var category = new Category(1L, "foo");
         var product = new Product(category, "bar", date, 9.99, 5);
 
         assertSoftly(softly -> {
@@ -94,8 +100,30 @@ class ProductTests {
     @Test
     void setsCategory() {
         var product = new Product();
-        var category = new Category(1L, "foo");
         product.setCategory(category);
         assertThat(product.getCategory()).isEqualTo(category);
+    }
+
+    @Test
+    void getsCategoryName() {
+        when(category.getName()).thenReturn("foo");
+
+        var product = new Product();
+        product.setCategory(category);
+        assertThat(product.getCategoryName()).isEqualTo("foo");
+    }
+
+    @Test
+    void isStockedWhenQuantityPositive() {
+        var product = new Product();
+        product.setQuantity(1);
+        assertThat(product.isStocked()).isTrue();
+    }
+
+    @Test
+    void isNotStockedWhenQuantityNotPositive() {
+        var product = new Product();
+        product.setQuantity(0);
+        assertThat(product.isStocked()).isFalse();
     }
 }

@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -12,6 +15,7 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
+    @JsonIgnore
     private Category category;
 
     @Column(nullable = false)
@@ -24,6 +28,7 @@ public class Product {
     private Double msrp;
 
     @Column(nullable = false)
+    @JsonIgnore
     private Integer quantity;
 
     public Product() {}
@@ -91,5 +96,15 @@ public class Product {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    @JsonProperty("category")
+    public String getCategoryName() {
+        return category.getName();
+    }
+
+    @JsonProperty
+    public boolean isStocked() {
+        return quantity > 0;
     }
 }
