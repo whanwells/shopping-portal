@@ -45,7 +45,7 @@ class CategoryControllerTests {
     }
 
     @Test
-    void getsErrorIfCategoryIdInvalid() throws Exception {
+    void returnsErrorWhenCategoryIdInvalid() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/api/categories/1"))
