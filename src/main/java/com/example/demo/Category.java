@@ -1,6 +1,10 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Category {
@@ -11,6 +15,10 @@ public class Category {
 
     @Column(nullable = false, unique = true)
     private String name;
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Product> products = new HashSet<>();
 
     public Category() {}
 
@@ -37,5 +45,17 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+
+        for (var product : products) {
+            product.setCategory(this);
+        }
     }
 }
