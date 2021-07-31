@@ -14,6 +14,7 @@ class RoleTests {
         assertSoftly(softly -> {
             softly.assertThat(role.getId()).isNull();
             softly.assertThat(role.getName()).isNull();
+            softly.assertThat(role.getUsers()).isEmpty();
         });
     }
 
