@@ -44,20 +44,20 @@ class ProductTests {
     }
 
     @Test
-    void setReleaseDate() {
+    void setsReleaseDate() {
         var date = LocalDate.now();
         product.setReleaseDate(date);
         assertThat(product.getReleaseDate()).isEqualTo(date);
     }
 
     @Test
-    void setMsrp() {
+    void setsMsrp() {
         product.setMsrp(9.99);
         assertThat(product.getMsrp()).isEqualTo(9.99);
     }
 
     @Test
-    void setQuantity() {
+    void setsQuantity() {
         product.setQuantity(5);
         assertThat(product.getQuantity()).isEqualTo(5);
     }
