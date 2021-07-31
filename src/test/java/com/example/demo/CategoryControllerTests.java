@@ -18,10 +18,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class CategoryControllerTests {
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @MockBean
-    CategoryService service;
+    private CategoryService service;
 
     private static Category createCategory() {
         var category = new Category();
