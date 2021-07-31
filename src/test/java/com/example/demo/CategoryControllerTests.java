@@ -25,7 +25,7 @@ class CategoryControllerTests {
 
     @Test
     void getsAllCategories() throws Exception {
-        when(service.findAll()).thenReturn(List.of(new Category(1L, "foo")));
+        when(service.findAll()).thenReturn(List.of(createCategory()));
 
         mockMvc.perform(get("/api/categories"))
             .andExpect(status().isOk())
@@ -36,12 +36,16 @@ class CategoryControllerTests {
 
     @Test
     void getsCategoryById() throws Exception {
-        when(service.findById(1L)).thenReturn(Optional.of(new Category(1L, "foo")));
+        when(service.findById(1L)).thenReturn(Optional.of(createCategory()));
 
         mockMvc.perform(get("/api/categories/1"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id").value(1))
             .andExpect(jsonPath("$.name").value("foo"));
+    }
+
+    private static Category createCategory() {
+        return new Category(1L, "foo");
     }
 
     @Test
