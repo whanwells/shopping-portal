@@ -38,7 +38,8 @@ class CategoryControllerTests {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.size()").value(1))
             .andExpect(jsonPath("$[0].id").value(1))
-            .andExpect(jsonPath("$[0].name").value("foo"));
+            .andExpect(jsonPath("$[0].name").value("foo"))
+            .andExpect(jsonPath("$[0].products").doesNotHaveJsonPath());
     }
 
     @Test
@@ -48,7 +49,8 @@ class CategoryControllerTests {
         mockMvc.perform(get("/api/categories/1"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id").value(1))
-            .andExpect(jsonPath("$.name").value("foo"));
+            .andExpect(jsonPath("$.name").value("foo"))
+            .andExpect(jsonPath("$[0].products").doesNotHaveJsonPath());
     }
 
     @Test
