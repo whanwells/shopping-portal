@@ -23,6 +23,10 @@ class CategoryControllerTests {
     @MockBean
     CategoryService service;
 
+    private static Category createCategory() {
+        return new Category(1L, "foo");
+    }
+
     @Test
     void getsAllCategories() throws Exception {
         when(service.findAll()).thenReturn(List.of(createCategory()));
@@ -42,10 +46,6 @@ class CategoryControllerTests {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id").value(1))
             .andExpect(jsonPath("$.name").value("foo"));
-    }
-
-    private static Category createCategory() {
-        return new Category(1L, "foo");
     }
 
     @Test

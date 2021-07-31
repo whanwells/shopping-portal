@@ -23,6 +23,10 @@ class RoleControllerTests {
     @MockBean
     private RoleService service;
 
+    private static Role createRole() {
+        return new Role(1L, "foo");
+    }
+
     @Test
     void getsAllRoles() throws Exception {
         when(service.findAll()).thenReturn(List.of(createRole()));
@@ -50,9 +54,5 @@ class RoleControllerTests {
 
         mockMvc.perform(get("/api/roles/1"))
             .andExpect(status().isNotFound());
-    }
-
-    private static Role createRole() {
-        return new Role(1L, "foo");
     }
 }

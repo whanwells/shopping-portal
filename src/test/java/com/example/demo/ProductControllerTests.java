@@ -24,6 +24,10 @@ class ProductControllerTests {
     @MockBean
     private ProductService service;
 
+    private static Category createCategory() {
+        return new Category(1L, "foo");
+    }
+
     @Test
     void getAllProducts() throws Exception {
         when(service.findAll()).thenReturn(List.of(createProduct()));
@@ -70,10 +74,6 @@ class ProductControllerTests {
 
         mockMvc.perform(get("/api/products/1"))
             .andExpect(status().isNotFound());
-    }
-
-    private static Category createCategory() {
-        return new Category(1L, "foo");
     }
 
     private static Product createProduct() {

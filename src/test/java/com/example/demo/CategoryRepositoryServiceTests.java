@@ -21,6 +21,10 @@ class CategoryRepositoryServiceTests {
     @InjectMocks
     private CategoryRepositoryService service;
 
+    private static Category createCategory() {
+        return new Category(1L, "foo");
+    }
+
     @Test
     void findsAllCategories() {
         when(repository.findAll()).thenReturn(List.of(createCategory()));
@@ -31,9 +35,5 @@ class CategoryRepositoryServiceTests {
     void findsCategoryById() {
         when(repository.findById(1L)).thenReturn(Optional.of(createCategory()));
         assertThat(service.findById(1L)).isPresent();
-    }
-
-    private static Category createCategory() {
-        return new Category(1L, "foo");
     }
 }

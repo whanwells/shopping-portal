@@ -21,6 +21,10 @@ class RoleRepositoryServiceTests {
     @InjectMocks
     private RoleRepositoryService service;
 
+    private static Role createRole() {
+        return new Role(1L, "foo");
+    }
+
     @Test
     void findsAllRoles() {
         when(repository.findAll()).thenReturn(List.of(createRole()));
@@ -31,9 +35,5 @@ class RoleRepositoryServiceTests {
     void findsRoleById() {
         when(repository.findById(1L)).thenReturn(Optional.of(createRole()));
         assertThat(service.findById(1L)).isPresent();
-    }
-
-    private static Role createRole() {
-        return new Role(1L, "foo");
     }
 }

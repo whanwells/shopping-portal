@@ -22,6 +22,14 @@ class ProductRepositoryServiceTests {
     @InjectMocks
     private ProductRepositoryService service;
 
+    private static Category createCategory() {
+        return new Category(1L, "foo");
+    }
+
+    private static Product createProduct() {
+        return new Product(1L, createCategory(), "bar", LocalDate.now(), 9.99, 5);
+    }
+
     @Test
     void findsAllProducts() {
         when(repository.findAll()).thenReturn(List.of(createProduct()));
@@ -38,13 +46,5 @@ class ProductRepositoryServiceTests {
     void findsProductById() {
         when(repository.findById(1L)).thenReturn(Optional.of(createProduct()));
         assertThat(service.findById(1L)).isPresent();
-    }
-
-    private static Category createCategory() {
-        return new Category(1L, "foo");
-    }
-
-    private static Product createProduct() {
-        return new Product(1L, createCategory(), "bar", LocalDate.now(), 9.99, 5);
     }
 }
