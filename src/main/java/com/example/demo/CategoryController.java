@@ -23,8 +23,8 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    Category getById(@PathVariable Long id) throws CategoryNotFoundException {
+    Category getById(@PathVariable Long id) {
         return service.findById(id)
-            .orElseThrow(CategoryNotFoundException::new);
+            .orElseThrow(() -> new ResourceNotFoundException(Category.class));
     }
 }

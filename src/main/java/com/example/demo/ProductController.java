@@ -22,9 +22,9 @@ public class ProductController {
         return service.findAll();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     Product getById(@PathVariable Long id) {
         return service.findById(id)
-            .orElseThrow(ProductNotFoundException::new);
+            .orElseThrow(() -> new ResourceNotFoundException(Product.class));
     }
 }
