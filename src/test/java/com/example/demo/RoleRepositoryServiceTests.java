@@ -16,27 +16,23 @@ import static org.mockito.Mockito.when;
 class RoleRepositoryServiceTests {
 
     @Mock
+    private Role role;
+
+    @Mock
     private RoleRepository repository;
 
     @InjectMocks
     private RoleRepositoryService service;
 
-    private static Role createRole() {
-        var role = new Role();
-        role.setId(1L);
-        role.setName("foo");
-        return role;
-    }
-
     @Test
     void findsAllRoles() {
-        when(repository.findAll()).thenReturn(List.of(createRole()));
+        when(repository.findAll()).thenReturn(List.of(role));
         assertThat(service.findAll()).hasSize(1);
     }
 
     @Test
     void findsRoleById() {
-        when(repository.findById(1L)).thenReturn(Optional.of(createRole()));
+        when(repository.findById(1L)).thenReturn(Optional.of(role));
         assertThat(service.findById(1L)).isPresent();
     }
 }

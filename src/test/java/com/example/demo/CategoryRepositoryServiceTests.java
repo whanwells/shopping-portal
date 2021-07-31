@@ -16,27 +16,23 @@ import static org.mockito.Mockito.when;
 class CategoryRepositoryServiceTests {
 
     @Mock
+    private Category category;
+
+    @Mock
     private CategoryRepository repository;
 
     @InjectMocks
     private CategoryRepositoryService service;
 
-    private static Category createCategory() {
-        var category = new Category();
-        category.setId(1L);
-        category.setName("foo");
-        return category;
-    }
-
     @Test
     void findsAllCategories() {
-        when(repository.findAll()).thenReturn(List.of(createCategory()));
+        when(repository.findAll()).thenReturn(List.of(category));
         assertThat(service.findAll()).hasSize(1);
     }
 
     @Test
     void findsCategoryById() {
-        when(repository.findById(1L)).thenReturn(Optional.of(createCategory()));
+        when(repository.findById(1L)).thenReturn(Optional.of(category));
         assertThat(service.findById(1L)).isPresent();
     }
 }
