@@ -83,7 +83,7 @@ class ProductControllerTests {
     }
 
     @Test
-    void returnsErrorWhenProductIdInvalid() throws Exception {
+    void returnsErrorWithInvalidProductId() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/api/products/1"))

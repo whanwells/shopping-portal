@@ -54,7 +54,7 @@ class RoleControllerTests {
     }
 
     @Test
-    void returnsErrorWhenProductIdInvalid() throws Exception {
+    void returnsErrorWithInvalidRoleId() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/api/roles/1"))
