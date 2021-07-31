@@ -47,7 +47,7 @@ class CategoryTests {
         category.addProduct(product);
 
         assertSoftly(softly -> {
-            softly.assertThat(category.getProducts()).hasSize(1);
+            softly.assertThat(category.getProducts()).contains(product);
             verify(product).setCategory(category);
         });
     }
@@ -58,7 +58,7 @@ class CategoryTests {
         category.removeProduct(product);
 
         assertSoftly(softly -> {
-            softly.assertThat(category.getProducts()).isEmpty();
+            softly.assertThat(category.getProducts()).doesNotContain(product);
             verify(product).setCategory(null);
         });
     }
