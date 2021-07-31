@@ -28,6 +28,12 @@ INSERT INTO product (category_id, name, release_date, msrp, quantity) VALUES (3,
 INSERT INTO product (category_id, name, release_date, msrp, quantity) VALUES (3, 'Sackboy: A Big Adventure', '2020-11-20', 59.99, 41);
 INSERT INTO product (category_id, name, release_date, msrp, quantity) VALUES (3, 'The Nioh Collection', '2021-02-05', 69.99, 37);
 
--- Roles
+-- Administrators
 INSERT INTO role (name) VALUES ('ADMIN');
+INSERT INTO user (email, password) VALUES ('admin@example.com', '');
+INSERT INTO user_roles (users_id, roles_id) VALUES (1, 1);
+
+-- Customers
 INSERT INTO role (name) VALUES ('CUSTOMER');
+INSERT INTO user (email, password) VALUES ('customer@example.com', '');
+INSERT INTO user_roles (users_id, roles_id) VALUES (2, 2);
