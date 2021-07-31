@@ -24,7 +24,10 @@ class CategoryControllerTests {
     CategoryService service;
 
     private static Category createCategory() {
-        return new Category(1L, "foo");
+        var category = new Category();
+        category.setId(1L);
+        category.setName("foo");
+        return category;
     }
 
     @Test

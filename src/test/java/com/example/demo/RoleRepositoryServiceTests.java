@@ -22,7 +22,10 @@ class RoleRepositoryServiceTests {
     private RoleRepositoryService service;
 
     private static Role createRole() {
-        return new Role(1L, "foo");
+        var role = new Role();
+        role.setId(1L);
+        role.setName("foo");
+        return role;
     }
 
     @Test

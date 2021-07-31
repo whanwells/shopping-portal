@@ -25,7 +25,21 @@ class ProductControllerTests {
     private ProductService service;
 
     private static Category createCategory() {
-        return new Category(1L, "foo");
+        var category = new Category();
+        category.setId(1L);
+        category.setName("foo");
+        return category;
+    }
+
+    private static Product createProduct() {
+        var product = new Product();
+        product.setId(1L);
+        product.setName("bar");
+        product.setReleaseDate(LocalDate.of(2000, 1, 1));
+        product.setMsrp(9.99);
+        product.setQuantity(5);
+        product.setCategory(createCategory());
+        return product;
     }
 
     @Test
@@ -74,9 +88,5 @@ class ProductControllerTests {
 
         mockMvc.perform(get("/api/products/1"))
             .andExpect(status().isNotFound());
-    }
-
-    private static Product createProduct() {
-        return new Product(1L, createCategory(), "bar", LocalDate.of(2000, 1, 1), 9.99, 5);
     }
 }

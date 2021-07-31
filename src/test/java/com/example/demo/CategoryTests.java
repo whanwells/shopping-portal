@@ -17,36 +17,14 @@ class CategoryTests {
     @Mock
     private Product product;
 
-    @Test
-    void constructsWithNoArgs() {
-        var category = new Category();
+    private final Category category = new Category();
 
+    @Test
+    void constructs() {
         assertSoftly(softly -> {
             softly.assertThat(category.getId()).isNull();
             softly.assertThat(category.getName()).isNull();
-            softly.assertThat(category.getProducts()).hasSize(0);
-        });
-    }
-
-    @Test
-    void constructsWithAllArgs() {
-        var category = new Category(1L, "foo");
-
-        assertSoftly(softly -> {
-            softly.assertThat(category.getId()).isEqualTo(1);
-            softly.assertThat(category.getName()).isEqualTo("foo");
-            softly.assertThat(category.getProducts()).hasSize(0);
-        });
-    }
-
-    @Test
-    void constructsWithoutId() {
-        var category = new Category("foo");
-
-        assertSoftly(softly -> {
-            softly.assertThat(category.getId()).isNull();
-            softly.assertThat(category.getName()).isEqualTo("foo");
-            softly.assertThat(category.getProducts()).hasSize(0);
+            softly.assertThat(category.getProducts()).isEmpty();
         });
     }
 
@@ -65,18 +43,23 @@ class CategoryTests {
     }
 
     @Test
-    void setsProducts() {
-        var products = Set.of(product);
-        var category = new Category();
-        category.setProducts(products);
-        assertThat(category.getProducts()).isEqualTo(products);
+    void addsProducts() {
+        category.addProduct(product);
+
+        assertSoftly(softly -> {
+            softly.assertThat(category.getProducts()).hasSize(1);
+            verify(product).setCategory(category);
+        });
     }
 
     @Test
-    void setsProductCategories() {
-        var products = Set.of(product);
-        var category = new Category();
-        category.setProducts(products);
-        verify(product).setCategory(category);
+    void removesProducts() {
+        category.addProduct(product);
+        category.removeProduct(product);
+
+        assertSoftly(softly -> {
+            softly.assertThat(category.getProducts()).isEmpty();
+            verify(product).setCategory(null);
+        });
     }
 }

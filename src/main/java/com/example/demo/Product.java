@@ -13,11 +13,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    @JsonIgnore
-    private Category category;
-
     @Column(nullable = false)
     private String name;
 
@@ -31,24 +26,10 @@ public class Product {
     @JsonIgnore
     private Integer quantity;
 
-    public Product() {}
-
-    public Product(Long id, Category category, String name, LocalDate releaseDate, Double msrp, Integer quantity) {
-        this.id = id;
-        this.category = category;
-        this.name = name;
-        this.releaseDate = releaseDate;
-        this.msrp = msrp;
-        this.quantity = quantity;
-    }
-
-    public Product(Category category, String name, LocalDate releaseDate, Double msrp, Integer quantity) {
-        this.name = name;
-        this.category = category;
-        this.releaseDate = releaseDate;
-        this.msrp = msrp;
-        this.quantity = quantity;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    @JsonIgnore
+    private Category category;
 
     public Long getId() {
         return id;

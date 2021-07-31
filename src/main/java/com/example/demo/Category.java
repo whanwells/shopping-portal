@@ -16,20 +16,14 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(
+        mappedBy = "category",
+        fetch = FetchType.LAZY,
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
     @JsonIgnore
-    private Set<Product> products = new HashSet<>();
-
-    public Category() {}
-
-    public Category(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Category(String name) {
-        this.name = name;
-    }
+    private final Set<Product> products = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -51,11 +45,13 @@ public class Category {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void addProduct(Product product) {
+        products.add(product);
+        product.setCategory(this);
+    }
 
-        for (var product : products) {
-            product.setCategory(this);
-        }
+    public void removeProduct(Product product) {
+        products.remove(product);
+        product.setCategory(null);
     }
 }
