@@ -18,7 +18,7 @@ class RoleTests {
     }
 
     @Test
-    void constructsWithAllProperties() {
+    void constructsWithAllArgs() {
         var role = new Role(1L, "foo");
 
         assertSoftly(softly -> {
@@ -28,7 +28,7 @@ class RoleTests {
     }
 
     @Test
-    void constructsWithName() {
+    void constructsWithoutId() {
         var role = new Role("foo");
 
         assertSoftly(softly -> {

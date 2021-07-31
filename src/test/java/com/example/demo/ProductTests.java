@@ -32,7 +32,7 @@ class ProductTests {
     }
 
     @Test
-    void constructsWithAllProperties() {
+    void constructsWithAllArgs() {
         var date = LocalDate.now();
         var product = new Product(1L, category, "bar", date, 9.99, 5);
 

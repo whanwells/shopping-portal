@@ -29,7 +29,7 @@ class CategoryTests {
     }
 
     @Test
-    void constructsWithAllProperties() {
+    void constructsWithAllArgs() {
         var category = new Category(1L, "foo");
 
         assertSoftly(softly -> {
@@ -40,7 +40,7 @@ class CategoryTests {
     }
 
     @Test
-    void constructsWithName() {
+    void constructsWithoutId() {
         var category = new Category("foo");
 
         assertSoftly(softly -> {
