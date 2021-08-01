@@ -1,9 +1,12 @@
 package com.example.demo;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -15,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
-class UserControllerTests {
+class UserControllerTests extends BaseControllerTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -38,7 +41,23 @@ class UserControllerTests {
         return role;
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"/api/users", "/api/users/1"})
+    void blocksUnauthenticatedUsers(String path) throws Exception {
+        mockMvc.perform(get(path))
+            .andExpect(status().isForbidden());
+    }
+
+    @ParameterizedTest
+    @WithMockUser
+    @ValueSource(strings = {"/api/users", "/api/users/1"})
+    void blocksUnauthorizedUsers(String path) throws Exception {
+        mockMvc.perform(get(path))
+            .andExpect(status().isForbidden());
+    }
+
     @Test
+    @WithMockUser(roles = {"ADMIN"})
     void getsAllUsers() throws Exception {
         when(service.findAll()).thenReturn(List.of(createUser()));
 
@@ -54,6 +73,7 @@ class UserControllerTests {
     }
 
     @Test
+    @WithMockUser(roles = {"ADMIN"})
     void getsUserById() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.of(createUser()));
 
@@ -68,6 +88,7 @@ class UserControllerTests {
     }
 
     @Test
+    @WithMockUser(roles = {"ADMIN"})
     void returnsErrorWithInvalidUserId() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.empty());
 

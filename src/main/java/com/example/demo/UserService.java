@@ -8,4 +8,6 @@ public interface UserService {
     List<User> findAll();
 
     Optional<User> findById(long id);
+
+    Optional<User> findByEmail(String email);
 }

@@ -35,4 +35,10 @@ class UserRepositoryServiceTests {
         when(repository.findById(1L)).thenReturn(Optional.of(user));
         assertThat(service.findById(1L)).isPresent();
     }
+
+    @Test
+    void findsUsersByEmail() {
+        when(repository.findByEmail("foo@example.com")).thenReturn(Optional.of(user));
+        assertThat(service.findByEmail("foo@example.com")).isPresent();
+    }
 }

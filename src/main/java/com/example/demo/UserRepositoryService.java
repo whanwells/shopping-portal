@@ -23,4 +23,9 @@ public class UserRepositoryService implements UserService {
     public Optional<User> findById(long id) {
         return repository.findById(id);
     }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
 }

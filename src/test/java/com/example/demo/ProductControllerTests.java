@@ -1,9 +1,12 @@
 package com.example.demo;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
@@ -16,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ProductController.class)
-class ProductControllerTests {
+class ProductControllerTests extends BaseControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -42,7 +45,15 @@ class ProductControllerTests {
         return product;
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"/api/products", "/api/products/1"})
+    void blocksUnauthenticatedUsers(String path) throws Exception {
+        mockMvc.perform(get(path))
+            .andExpect(status().isForbidden());
+    }
+
     @Test
+    @WithMockUser
     void getAllProducts() throws Exception {
         when(service.findAll()).thenReturn(List.of(createProduct()));
 
@@ -59,6 +70,7 @@ class ProductControllerTests {
     }
 
     @Test
+    @WithMockUser
     void getAllProductsByName() throws Exception {
         when(service.findByCategoryName("bar")).thenReturn(List.of());
 
@@ -68,6 +80,7 @@ class ProductControllerTests {
     }
 
     @Test
+    @WithMockUser
     void getProductById() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.of(createProduct()));
 
@@ -83,6 +96,7 @@ class ProductControllerTests {
     }
 
     @Test
+    @WithMockUser
     void returnsErrorWithInvalidProductId() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.empty());
 

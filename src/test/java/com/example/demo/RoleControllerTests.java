@@ -1,9 +1,12 @@
 package com.example.demo;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -15,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(RoleController.class)
-class RoleControllerTests {
+class RoleControllerTests extends BaseControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -30,7 +33,23 @@ class RoleControllerTests {
         return role;
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"/api/roles", "/api/roles/1"})
+    void blocksUnauthenticatedUsers(String path) throws Exception {
+        mockMvc.perform(get(path))
+            .andExpect(status().isForbidden());
+    }
+
+    @ParameterizedTest
+    @WithMockUser
+    @ValueSource(strings = {"/api/roles", "/api/roles/1"})
+    void blocksUnauthorizedUsers(String path) throws Exception {
+        mockMvc.perform(get(path))
+            .andExpect(status().isForbidden());
+    }
+
     @Test
+    @WithMockUser(roles = {"ADMIN"})
     void getsAllRoles() throws Exception {
         when(service.findAll()).thenReturn(List.of(createRole()));
 
@@ -43,6 +62,7 @@ class RoleControllerTests {
     }
 
     @Test
+    @WithMockUser(roles = {"ADMIN"})
     void getsRoleById() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.of(createRole()));
 
@@ -54,6 +74,7 @@ class RoleControllerTests {
     }
 
     @Test
+    @WithMockUser(roles = {"ADMIN"})
     void returnsErrorWithInvalidRoleId() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.empty());
 

@@ -1,9 +1,12 @@
 package com.example.demo;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -15,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CategoryController.class)
-class CategoryControllerTests {
+class CategoryControllerTests extends BaseControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -30,7 +33,15 @@ class CategoryControllerTests {
         return category;
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"/api/categories", "/api/categories/1"})
+    void blocksUnauthenticatedUsers(String path) throws Exception {
+        mockMvc.perform(get(path))
+            .andExpect(status().isForbidden());
+    }
+
     @Test
+    @WithMockUser
     void getsAllCategories() throws Exception {
         when(service.findAll()).thenReturn(List.of(createCategory()));
 
@@ -43,6 +54,7 @@ class CategoryControllerTests {
     }
 
     @Test
+    @WithMockUser
     void getsCategoryById() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.of(createCategory()));
 
@@ -54,6 +66,7 @@ class CategoryControllerTests {
     }
 
     @Test
+    @WithMockUser
     void returnsErrorWithInvalidCategoryId() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.empty());
 
