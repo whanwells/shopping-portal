@@ -35,4 +35,10 @@ class RoleRepositoryServiceTests {
         when(repository.findById(1L)).thenReturn(Optional.of(role));
         assertThat(service.findById(1L)).isPresent();
     }
+
+    @Test
+    void findsRolesByName() {
+        when(repository.findByName("foo")).thenReturn(Optional.of(role));
+        assertThat(service.findByName("foo")).isPresent();
+    }
 }

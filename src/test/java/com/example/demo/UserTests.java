@@ -21,10 +21,10 @@ class UserTests {
     @Mock
     private Set<User> roleUsers;
 
-    private final User user = new User();
-
     @Test
-    void constructs() {
+    void constructsWithoutArgs() {
+        var user = new User();
+
         assertSoftly(softly -> {
             softly.assertThat(user.getId()).isNull();
             softly.assertThat(user.getEmail()).isNull();
@@ -34,19 +34,34 @@ class UserTests {
     }
 
     @Test
+    void constructsWithoutId() {
+        var user = new User("foo@example.com", "bar");
+
+        assertSoftly(softly -> {
+            softly.assertThat(user.getId()).isNull();
+            softly.assertThat(user.getEmail()).isEqualTo("foo@example.com");
+            softly.assertThat(user.getPassword()).isEqualTo("bar");
+            softly.assertThat(user.getRoles()).isEmpty();
+        });
+    }
+
+    @Test
     void setsId() {
+        var user = new User();
         user.setId(1L);
         assertThat(user.getId()).isEqualTo(1);
     }
 
     @Test
     void setsEmail() {
+        var user = new User();
         user.setEmail("foo@example.com");
         assertThat(user.getEmail()).isEqualTo("foo@example.com");
     }
 
     @Test
     void setsPassword() {
+        var user = new User();
         user.setPassword("bar");
         assertThat(user.getPassword()).isEqualTo("bar");
     }
@@ -55,6 +70,7 @@ class UserTests {
     void addsRoles() {
         when(role.getUsers()).thenReturn(roleUsers);
 
+        var user = new User();
         user.addRole(role);
 
         assertSoftly(softly -> {
@@ -67,6 +83,7 @@ class UserTests {
     void removesRoles() {
         when(role.getUsers()).thenReturn(roleUsers);
 
+        var user = new User();
         user.removeRole(role);
 
         assertSoftly(softly -> {

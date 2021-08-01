@@ -41,4 +41,16 @@ class UserRepositoryServiceTests {
         when(repository.findByEmail("foo@example.com")).thenReturn(Optional.of(user));
         assertThat(service.findByEmail("foo@example.com")).isPresent();
     }
+
+    @Test
+    void findsUsersExistByEmail() {
+        when(repository.existsByEmail("foo@example.com")).thenReturn(true);
+        assertThat(service.existsByEmail("foo@example.com")).isTrue();
+    }
+
+    @Test
+    void savesUsers() {
+        when(repository.save(user)).thenReturn(user);
+        assertThat(service.save(user)).isEqualTo(user);
+    }
 }

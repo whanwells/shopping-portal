@@ -28,4 +28,14 @@ public class UserRepositoryService implements UserService {
     public Optional<User> findByEmail(String email) {
         return repository.findByEmail(email);
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return repository.existsByEmail(email);
+    }
+
+    @Override
+    public User save(User user) {
+        return repository.save(user);
+    }
 }

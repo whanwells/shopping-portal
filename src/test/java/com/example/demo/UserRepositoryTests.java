@@ -28,4 +28,10 @@ class UserRepositoryTests {
         entityManager.persist(createUser());
         assertThat(repository.findByEmail("foo@example.com")).isPresent();
     }
+
+    @Test
+    void findsUsersExistByEmail() {
+        entityManager.persist(createUser());
+        assertThat(repository.existsByEmail("foo@example.com")).isTrue();
+    }
 }
