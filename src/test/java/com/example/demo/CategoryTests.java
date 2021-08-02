@@ -39,7 +39,7 @@ class CategoryTests {
     }
 
     @Test
-    void addProducts() {
+    void addProduct() {
         category.addProduct(product);
         assertThat(category.getProducts()).contains(product);
         verify(product).setCategory(category);
