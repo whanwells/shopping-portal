@@ -18,13 +18,15 @@ public class UserController {
     private final UserService service;
 
     @GetMapping
-    public List<User> getAll() {
-        return service.findAll();
+    public List<UserResponse> getAll() {
+        return UserResponse.from(service.findAll());
     }
 
     @GetMapping("/{id}")
-    public User getById(@PathVariable Long id) {
-        return service.findById(id)
+    public UserResponse getById(@PathVariable Long id) {
+        var user = service.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(User.class));
+
+        return UserResponse.from(user);
     }
 }

@@ -13,16 +13,23 @@ public class ProductController {
     private final ProductService service;
 
     @GetMapping
-    List<Product> getAll(@RequestParam(defaultValue = "") String category) {
+    List<ProductResponse> getAll(@RequestParam(defaultValue = "") String category) {
+        List<Product> products;
+
         if (!category.isBlank()) {
-            return service.findByCategoryName(category);
+            products = service.findByCategoryName(category);
+        } else {
+            products = service.findAll();
         }
-        return service.findAll();
+
+        return ProductResponse.from(products);
     }
 
     @GetMapping("/{id}")
-    Product getById(@PathVariable Long id) {
-        return service.findById(id)
+    ProductResponse getById(@PathVariable Long id) {
+        var product = service.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(Product.class));
+
+        return ProductResponse.from(product);
     }
 }

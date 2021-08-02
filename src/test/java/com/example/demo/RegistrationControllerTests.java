@@ -58,10 +58,7 @@ public class RegistrationControllerTests extends BaseControllerTest {
             .andExpect(status().isCreated())
             .andExpect(header().string("Location", "http://localhost/api/users/1"))
             .andExpect(jsonPath("$.id").value(1))
-            .andExpect(jsonPath("$.email").value("foo@example.com"))
-            .andExpect(jsonPath("$.roles.size()").value(1))
-            .andExpect(jsonPath("$.roles[0].id").value(1))
-            .andExpect(jsonPath("$.roles[0].name").value("ROLE_USER"));
+            .andExpect(jsonPath("$.email").value("foo@example.com"));
     }
 
     @Test

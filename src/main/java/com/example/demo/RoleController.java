@@ -18,13 +18,15 @@ public class RoleController {
     private final RoleService service;
 
     @GetMapping
-    public List<Role> getAll() {
-        return service.findAll();
+    public List<RoleResponse> getAll() {
+        return RoleResponse.from(service.findAll());
     }
 
     @GetMapping("/{id}")
-    public Role getById(@PathVariable Long id) {
-        return service.findById(id)
+    public RoleResponse getById(@PathVariable Long id) {
+        var role = service.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(Role.class));
+
+        return RoleResponse.from(role);
     }
 }

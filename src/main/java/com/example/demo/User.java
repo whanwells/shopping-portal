@@ -1,12 +1,11 @@
 package com.example.demo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -20,12 +19,11 @@ public class User {
     private String email;
 
     @Column(length = 60, nullable = false)
-    @JsonIgnore
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable
-    private final Set<Role> roles = new HashSet<>();
+    private final List<Role> roles = new ArrayList<>();
 
     public User() {}
 

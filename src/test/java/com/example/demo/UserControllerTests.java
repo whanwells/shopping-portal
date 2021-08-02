@@ -63,7 +63,6 @@ class UserControllerTests extends BaseControllerTest {
             .andExpect(jsonPath("$.size()").value(1))
             .andExpect(jsonPath("$[0].id").value(1))
             .andExpect(jsonPath("$[0].email").value("foo@example.com"))
-            .andExpect(jsonPath("$[0].password").doesNotHaveJsonPath())
             .andExpect(jsonPath("$[0].roles.size()").value(1))
             .andExpect(jsonPath("$[0].roles[0].id").value(2))
             .andExpect(jsonPath("$[0].roles[0].name").value("bar"));
@@ -78,7 +77,6 @@ class UserControllerTests extends BaseControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id").value(1))
             .andExpect(jsonPath("$.email").value("foo@example.com"))
-            .andExpect(jsonPath("$.password").doesNotHaveJsonPath())
             .andExpect(jsonPath("$.roles.size()").value(1))
             .andExpect(jsonPath("$.roles[0].id").value(2))
             .andExpect(jsonPath("$.roles[0].name").value("bar"));

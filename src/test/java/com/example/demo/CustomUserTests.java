@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Set;
+import java.util.List;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.mockito.Mockito.when;
@@ -24,7 +24,7 @@ class CustomUserTests {
         when(user.getId()).thenReturn(1L);
         when(user.getEmail()).thenReturn("foo@example.com");
         when(user.getPassword()).thenReturn("bar");
-        when(user.getRoles()).thenReturn(Set.of(role));
+        when(user.getRoles()).thenReturn(List.of(role));
         when(role.getName()).thenReturn("baz");
 
         var userDetails = CustomUser.from(user);

@@ -16,13 +16,15 @@ public class CategoryController {
     private final CategoryService service;
 
     @GetMapping
-    List<Category> getAll() {
-        return service.findAll();
+    List<CategoryResponse> getAll() {
+        return CategoryResponse.from(service.findAll());
     }
 
     @GetMapping("/{id}")
-    Category getById(@PathVariable Long id) {
-        return service.findById(id)
+    CategoryResponse getById(@PathVariable Long id) {
+        var category = service.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(Category.class));
+
+        return CategoryResponse.from(category);
     }
 }

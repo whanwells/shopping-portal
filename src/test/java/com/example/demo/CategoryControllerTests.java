@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -51,8 +50,7 @@ class CategoryControllerTests extends BaseControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.size()").value(1))
             .andExpect(jsonPath("$[0].id").value(1))
-            .andExpect(jsonPath("$[0].name").value("foo"))
-            .andExpect(jsonPath("$[0].products").doesNotHaveJsonPath());
+            .andExpect(jsonPath("$[0].name").value("foo"));
     }
 
     @Test
@@ -63,8 +61,7 @@ class CategoryControllerTests extends BaseControllerTest {
         mockMvc.perform(get("/api/categories/1"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id").value(1))
-            .andExpect(jsonPath("$.name").value("foo"))
-            .andExpect(jsonPath("$[0].products").doesNotHaveJsonPath());
+            .andExpect(jsonPath("$.name").value("foo"));
     }
 
     @Test

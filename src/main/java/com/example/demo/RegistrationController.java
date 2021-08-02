@@ -22,14 +22,16 @@ public class RegistrationController {
 
     @PostMapping("/api/register")
     @Transactional
-    public ResponseEntity<User> register(@Valid @RequestBody RegistrationRequest request) {
+    public ResponseEntity<RegistrationResponse> register(@Valid @RequestBody RegistrationRequest request) {
         if (userService.existsByEmail(request.getEmail())) {
             throw new BadRequestException("A user with that email already exists");
         }
 
         var user = userService.save(createUser(request));
 
-        return ResponseEntity.created(createLocation(user)).body(user);
+        return ResponseEntity
+            .created(createLocation(user))
+            .body(RegistrationResponse.from(user));
     }
 
     private User createUser(RegistrationRequest request) {
