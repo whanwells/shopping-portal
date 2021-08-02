@@ -6,7 +6,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -16,15 +15,6 @@ class CategoryTests {
 
     @Mock
     private Product product;
-
-    @Test
-    void constructor() {
-        assertSoftly(s -> {
-            s.assertThat(category.getId()).isNull();
-            s.assertThat(category.getName()).isNull();
-            s.assertThat(category.getProducts()).isEmpty();
-        });
-    }
 
     @Test
     void addProduct() {

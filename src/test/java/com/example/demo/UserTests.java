@@ -22,26 +22,12 @@ class UserTests {
     private List<User> roleUsers;
 
     @Test
-    void constructorWithoutArgs() {
-        var user = new User();
-
-        assertSoftly(s -> {
-            s.assertThat(user.getId()).isNull();
-            s.assertThat(user.getEmail()).isNull();
-            s.assertThat(user.getPassword()).isNull();
-            s.assertThat(user.getRoles()).isEmpty();
-        });
-    }
-
-    @Test
     void constructorWithoutId() {
         var user = new User("foo@example.com", "bar");
 
         assertSoftly(s -> {
-            s.assertThat(user.getId()).isNull();
             s.assertThat(user.getEmail()).isEqualTo("foo@example.com");
             s.assertThat(user.getPassword()).isEqualTo("bar");
-            s.assertThat(user.getRoles()).isEmpty();
         });
     }
 
