@@ -7,8 +7,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.mockito.Mockito.when;
@@ -31,43 +29,6 @@ class ProductTests {
             s.assertThat(product.getQuantity()).isNull();
             s.assertThat(product.getCategory()).isNull();
         });
-    }
-
-    @Test
-    void setId() {
-        product.setId(1L);
-        assertThat(product.getId()).isEqualTo(1);
-    }
-
-    @Test
-    void setName() {
-        product.setName("foo");
-        assertThat(product.getName()).isEqualTo("foo");
-    }
-
-    @Test
-    void setReleaseDate() {
-        var date = LocalDate.now();
-        product.setReleaseDate(date);
-        assertThat(product.getReleaseDate()).isEqualTo(date);
-    }
-
-    @Test
-    void setMsrp() {
-        product.setMsrp(9.99);
-        assertThat(product.getMsrp()).isEqualTo(9.99);
-    }
-
-    @Test
-    void setQuantity() {
-        product.setQuantity(5);
-        assertThat(product.getQuantity()).isEqualTo(5);
-    }
-
-    @Test
-    void setCategory() {
-        product.setCategory(category);
-        assertThat(product.getCategory()).isEqualTo(category);
     }
 
     @Test

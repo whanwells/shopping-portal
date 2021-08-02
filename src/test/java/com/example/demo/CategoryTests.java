@@ -27,18 +27,6 @@ class CategoryTests {
     }
 
     @Test
-    void setId() {
-        category.setId(1L);
-        assertThat(category.getId()).isEqualTo(1L);
-    }
-
-    @Test
-    void setName() {
-        category.setName("foo");
-        assertThat(category.getName()).isEqualTo("foo");
-    }
-
-    @Test
     void addProduct() {
         category.addProduct(product);
         assertThat(category.getProducts()).contains(product);

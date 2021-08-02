@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import lombok.Getter;
+
+@Getter
 public class RegistrationResponse {
 
     private final long id;
@@ -8,13 +11,5 @@ public class RegistrationResponse {
     public RegistrationResponse(long id, String email) {
         this.id = id;
         this.email = email;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
     }
 }

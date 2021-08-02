@@ -46,27 +46,6 @@ class UserTests {
     }
 
     @Test
-    void setId() {
-        var user = new User();
-        user.setId(1L);
-        assertThat(user.getId()).isEqualTo(1);
-    }
-
-    @Test
-    void setEmail() {
-        var user = new User();
-        user.setEmail("foo@example.com");
-        assertThat(user.getEmail()).isEqualTo("foo@example.com");
-    }
-
-    @Test
-    void setPassword() {
-        var user = new User();
-        user.setPassword("bar");
-        assertThat(user.getPassword()).isEqualTo("bar");
-    }
-
-    @Test
     void addRole() {
         when(role.getUsers()).thenReturn(roleUsers);
 
