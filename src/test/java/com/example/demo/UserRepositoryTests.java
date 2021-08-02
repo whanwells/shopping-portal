@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -11,27 +12,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 class UserRepositoryTests {
 
     @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
     private UserRepository repository;
 
-    private static User createUser() {
-        var user = new User();
-        user.setEmail("foo@example.com");
-        user.setPassword("bar");
-        return user;
+    @Autowired
+    private TestEntityManager entityManager;
+
+    @BeforeEach
+    void setup() {
+        entityManager.persist(new User("foo@example.com", "bar"));
     }
 
     @Test
-    void findsUsersByEmail() {
-        entityManager.persist(createUser());
+    void findByEmail() {
         assertThat(repository.findByEmail("foo@example.com")).isPresent();
     }
 
     @Test
-    void findsUsersExistByEmail() {
-        entityManager.persist(createUser());
+    void existsByEmail() {
         assertThat(repository.existsByEmail("foo@example.com")).isTrue();
     }
 }

@@ -15,41 +15,41 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class UserRepositoryServiceTests {
 
-    @Mock
-    private User user;
+    @InjectMocks
+    private UserRepositoryService service;
 
     @Mock
     private UserRepository repository;
 
-    @InjectMocks
-    private UserRepositoryService service;
+    @Mock
+    private User user;
 
     @Test
-    void findsAllUsers() {
+    void findAll() {
         when(repository.findAll()).thenReturn(List.of(user));
         assertThat(service.findAll()).hasSize(1);
     }
 
     @Test
-    void findUsersById() {
+    void findById() {
         when(repository.findById(1L)).thenReturn(Optional.of(user));
         assertThat(service.findById(1L)).isPresent();
     }
 
     @Test
-    void findsUsersByEmail() {
+    void findByEmail() {
         when(repository.findByEmail("foo@example.com")).thenReturn(Optional.of(user));
         assertThat(service.findByEmail("foo@example.com")).isPresent();
     }
 
     @Test
-    void findsUsersExistByEmail() {
+    void existsByEmail() {
         when(repository.existsByEmail("foo@example.com")).thenReturn(true);
         assertThat(service.existsByEmail("foo@example.com")).isTrue();
     }
 
     @Test
-    void savesUsers() {
+    void save() {
         when(repository.save(user)).thenReturn(user);
         assertThat(service.save(user)).isEqualTo(user);
     }

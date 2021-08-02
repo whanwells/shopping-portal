@@ -7,12 +7,12 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 class RegistrationResponseTests {
 
     @Test
-    void constructs() {
+    void constructor() {
         var response = new RegistrationResponse(1L, "foo@example.com");
 
-        assertSoftly(softly -> {
-            softly.assertThat(response.getId()).isEqualTo(1L);
-            softly.assertThat(response.getEmail()).isEqualTo("foo@example.com");
+        assertSoftly(s -> {
+            s.assertThat(response.getId()).isEqualTo(1L);
+            s.assertThat(response.getEmail()).isEqualTo("foo@example.com");
         });
     }
 }

@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,29 +15,29 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class ProductRepositoryServiceTests {
 
-    @Mock
-    private Product product;
+    @InjectMocks
+    private ProductRepositoryService service;
 
     @Mock
     private ProductRepository repository;
 
-    @InjectMocks
-    private ProductRepositoryService service;
+    @Mock
+    private Product product;
 
     @Test
-    void findsAllProducts() {
+    void findAll() {
         when(repository.findAll()).thenReturn(List.of(product));
         assertThat(service.findAll()).hasSize(1);
     }
 
     @Test
-    void findsProductsByCategoryName() {
+    void findByCategory_Name() {
         when(repository.findByCategory_Name("foo")).thenReturn(List.of(product));
         assertThat(service.findByCategoryName("foo")).hasSize(1);
     }
 
     @Test
-    void findsProductById() {
+    void findById() {
         when(repository.findById(1L)).thenReturn(Optional.of(product));
         assertThat(service.findById(1L)).isPresent();
     }

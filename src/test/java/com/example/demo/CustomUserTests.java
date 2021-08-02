@@ -20,7 +20,7 @@ class CustomUserTests {
     private Role role;
 
     @Test
-    void createUserDetailsFromUser() {
+    void from() {
         when(user.getId()).thenReturn(1L);
         when(user.getEmail()).thenReturn("foo@example.com");
         when(user.getPassword()).thenReturn("bar");
@@ -33,14 +33,12 @@ class CustomUserTests {
             softly.assertThat(userDetails.getId()).isEqualTo(1);
             softly.assertThat(userDetails.getUsername()).isEqualTo("foo@example.com");
             softly.assertThat(userDetails.getPassword()).isEqualTo("bar");
-            softly.assertThat(hasAuthority(userDetails)).isTrue();
+            softly.assertThat(
+                userDetails
+                    .getAuthorities()
+                    .stream()
+                    .anyMatch(a -> a.getAuthority().equals("baz"))
+            ).isTrue();
         });
-    }
-
-    private static boolean hasAuthority(CustomUser customUser) {
-        return customUser
-            .getAuthorities()
-            .stream()
-            .anyMatch(a -> a.getAuthority().equals("baz"));
     }
 }

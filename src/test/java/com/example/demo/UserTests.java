@@ -22,73 +22,69 @@ class UserTests {
     private Set<User> roleUsers;
 
     @Test
-    void constructsWithoutArgs() {
+    void constructorWithoutArgs() {
         var user = new User();
 
-        assertSoftly(softly -> {
-            softly.assertThat(user.getId()).isNull();
-            softly.assertThat(user.getEmail()).isNull();
-            softly.assertThat(user.getPassword()).isNull();
-            softly.assertThat(user.getRoles()).isEmpty();
+        assertSoftly(s -> {
+            s.assertThat(user.getId()).isNull();
+            s.assertThat(user.getEmail()).isNull();
+            s.assertThat(user.getPassword()).isNull();
+            s.assertThat(user.getRoles()).isEmpty();
         });
     }
 
     @Test
-    void constructsWithoutId() {
+    void constructorWithoutId() {
         var user = new User("foo@example.com", "bar");
 
-        assertSoftly(softly -> {
-            softly.assertThat(user.getId()).isNull();
-            softly.assertThat(user.getEmail()).isEqualTo("foo@example.com");
-            softly.assertThat(user.getPassword()).isEqualTo("bar");
-            softly.assertThat(user.getRoles()).isEmpty();
+        assertSoftly(s -> {
+            s.assertThat(user.getId()).isNull();
+            s.assertThat(user.getEmail()).isEqualTo("foo@example.com");
+            s.assertThat(user.getPassword()).isEqualTo("bar");
+            s.assertThat(user.getRoles()).isEmpty();
         });
     }
 
     @Test
-    void setsId() {
+    void setId() {
         var user = new User();
         user.setId(1L);
         assertThat(user.getId()).isEqualTo(1);
     }
 
     @Test
-    void setsEmail() {
+    void setEmail() {
         var user = new User();
         user.setEmail("foo@example.com");
         assertThat(user.getEmail()).isEqualTo("foo@example.com");
     }
 
     @Test
-    void setsPassword() {
+    void setPassword() {
         var user = new User();
         user.setPassword("bar");
         assertThat(user.getPassword()).isEqualTo("bar");
     }
 
     @Test
-    void addsRoles() {
+    void addRole() {
         when(role.getUsers()).thenReturn(roleUsers);
 
         var user = new User();
         user.addRole(role);
 
-        assertSoftly(softly -> {
-            softly.assertThat(user.getRoles()).contains(role);
-            verify(roleUsers).add(user);
-        });
+        assertThat(user.getRoles()).contains(role);
+        verify(roleUsers).add(user);
     }
 
     @Test
-    void removesRoles() {
+    void removeRole() {
         when(role.getUsers()).thenReturn(roleUsers);
 
         var user = new User();
         user.removeRole(role);
 
-        assertSoftly(softly -> {
-            softly.assertThat(user.getRoles()).doesNotContain(role);
-            verify(roleUsers).remove(user);
-        });
+        assertThat(user.getRoles()).doesNotContain(role);
+        verify(roleUsers).remove(user);
     }
 }

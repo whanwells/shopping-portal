@@ -15,29 +15,29 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class RoleRepositoryServiceTests {
 
-    @Mock
-    private Role role;
+    @InjectMocks
+    private RoleRepositoryService service;
 
     @Mock
     private RoleRepository repository;
 
-    @InjectMocks
-    private RoleRepositoryService service;
+    @Mock
+    private Role role;
 
     @Test
-    void findsAllRoles() {
+    void findAll() {
         when(repository.findAll()).thenReturn(List.of(role));
         assertThat(service.findAll()).hasSize(1);
     }
 
     @Test
-    void findsRoleById() {
+    void findById() {
         when(repository.findById(1L)).thenReturn(Optional.of(role));
         assertThat(service.findById(1L)).isPresent();
     }
 
     @Test
-    void findsRolesByName() {
+    void findByName() {
         when(repository.findByName("foo")).thenReturn(Optional.of(role));
         assertThat(service.findByName("foo")).isPresent();
     }

@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -27,35 +28,32 @@ class ProductControllerTests extends BaseControllerTest {
     @MockBean
     private ProductService service;
 
-    private static Category createCategory() {
+    private final Product product = new Product();
+
+    @BeforeEach
+    void setup() {
         var category = new Category();
         category.setId(1L);
         category.setName("foo");
-        return category;
-    }
 
-    private static Product createProduct() {
-        var product = new Product();
         product.setId(1L);
         product.setName("bar");
         product.setReleaseDate(LocalDate.of(2000, 1, 1));
         product.setMsrp(9.99);
         product.setQuantity(5);
-        product.setCategory(createCategory());
-        return product;
+        product.setCategory(category);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"/api/products", "/api/products/1"})
-    void blocksUnauthenticatedUsers(String path) throws Exception {
-        mockMvc.perform(get(path))
-            .andExpect(status().isForbidden());
+    void whenUnauthenticated(String path) throws Exception {
+        mockMvc.perform(get(path)).andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser
-    void getAllProducts() throws Exception {
-        when(service.findAll()).thenReturn(List.of(createProduct()));
+    void getAll() throws Exception {
+        when(service.findAll()).thenReturn(List.of(product));
 
         mockMvc.perform(get("/api/products"))
             .andExpect(status().isOk())
@@ -71,7 +69,7 @@ class ProductControllerTests extends BaseControllerTest {
 
     @Test
     @WithMockUser
-    void getAllProductsByName() throws Exception {
+    void getAllWithCategory() throws Exception {
         when(service.findByCategoryName("bar")).thenReturn(List.of());
 
         mockMvc.perform(get("/api/products?category=baz"))
@@ -81,8 +79,8 @@ class ProductControllerTests extends BaseControllerTest {
 
     @Test
     @WithMockUser
-    void getProductById() throws Exception {
-        when(service.findById(1L)).thenReturn(Optional.of(createProduct()));
+    void getById() throws Exception {
+        when(service.findById(1L)).thenReturn(Optional.of(product));
 
         mockMvc.perform(get("/api/products/1"))
             .andExpect(status().isOk())
@@ -97,10 +95,8 @@ class ProductControllerTests extends BaseControllerTest {
 
     @Test
     @WithMockUser
-    void returnsErrorWithInvalidProductId() throws Exception {
+    void getByIdWithInvalidId() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.empty());
-
-        mockMvc.perform(get("/api/products/1"))
-            .andExpect(status().isNotFound());
+        mockMvc.perform(get("/api/products/1")).andExpect(status().isNotFound());
     }
 }

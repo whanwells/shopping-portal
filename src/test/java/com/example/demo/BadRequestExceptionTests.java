@@ -8,12 +8,12 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 class BadRequestExceptionTests {
 
     @Test
-    void constructs() {
+    void constructor() {
         var exception = new BadRequestException("foo");
 
-        assertSoftly(softly -> {
-            softly.assertThat(exception.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
-            softly.assertThat(exception.getReason()).isEqualTo("foo");
+        assertSoftly(s -> {
+            s.assertThat(exception.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+            s.assertThat(exception.getReason()).isEqualTo("foo");
         });
     }
 }

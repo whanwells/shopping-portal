@@ -13,33 +13,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ProductRepositoryTests {
 
     @Autowired
-    TestEntityManager entityManager;
-
-    @Autowired
     ProductRepository repository;
 
-    private static Category createCategory() {
+    @Autowired
+    TestEntityManager entityManager;
+
+    @Test
+    void findByCategory_Name() {
         var category = new Category();
         category.setName("foo");
-        return category;
-    }
+        entityManager.persist(category);
 
-    private static Product createProduct(Category category) {
         var product = new Product();
         product.setName("bar");
         product.setReleaseDate(LocalDate.of(2000, 1, 1));
         product.setMsrp(9.99);
         product.setQuantity(5);
         product.setCategory(category);
-        return product;
-    }
-
-    @Test
-    void findsProductsByCategoryName() {
-        var category = createCategory();
-        var product = createProduct(category);
-        entityManager.persist(category);
         entityManager.persist(product);
+
         assertThat(repository.findByCategory_Name("foo")).hasSize(1);
     }
 }

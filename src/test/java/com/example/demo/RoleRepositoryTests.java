@@ -11,20 +11,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RoleRepositoryTests {
 
     @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
     private RoleRepository repository;
 
-    private static Role createRole() {
-        var role = new Role();
-        role.setName("foo");
-        return role;
-    }
+    @Autowired
+    private TestEntityManager entityManager;
 
     @Test
-    void findsRolesByName() {
-        entityManager.persist(createRole());
+    void findByName() {
+        var role = new Role();
+        role.setName("foo");
+        entityManager.persist(role);
         assertThat(repository.findByName("foo")).isPresent();
     }
 }

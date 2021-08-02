@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -26,40 +27,36 @@ class UserControllerTests extends BaseControllerTest {
     @MockBean
     private UserService service;
 
-    private static User createUser() {
-        var user = new User();
-        user.setId(1L);
-        user.setEmail("foo@example.com");
-        user.addRole(createRole());
-        return user;
-    }
+    private final User user = new User();
 
-    private static Role createRole() {
+    @BeforeEach
+    void setup() {
         var role = new Role();
         role.setId(2L);
         role.setName("bar");
-        return role;
+
+        user.setId(1L);
+        user.setEmail("foo@example.com");
+        user.addRole(role);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"/api/users", "/api/users/1"})
-    void blocksUnauthenticatedUsers(String path) throws Exception {
-        mockMvc.perform(get(path))
-            .andExpect(status().isForbidden());
+    void whenUnauthenticated(String path) throws Exception {
+        mockMvc.perform(get(path)).andExpect(status().isForbidden());
     }
 
     @ParameterizedTest
     @WithMockUser
     @ValueSource(strings = {"/api/users", "/api/users/1"})
-    void blocksUnauthorizedUsers(String path) throws Exception {
-        mockMvc.perform(get(path))
-            .andExpect(status().isForbidden());
+    void whenUnauthorized(String path) throws Exception {
+        mockMvc.perform(get(path)).andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(roles = {"ADMIN"})
-    void getsAllUsers() throws Exception {
-        when(service.findAll()).thenReturn(List.of(createUser()));
+    void getAll() throws Exception {
+        when(service.findAll()).thenReturn(List.of(user));
 
         mockMvc.perform(get("/api/users"))
             .andExpect(status().isOk())
@@ -74,8 +71,8 @@ class UserControllerTests extends BaseControllerTest {
 
     @Test
     @WithMockUser(roles = {"ADMIN"})
-    void getsUserById() throws Exception {
-        when(service.findById(1L)).thenReturn(Optional.of(createUser()));
+    void getById() throws Exception {
+        when(service.findById(1L)).thenReturn(Optional.of(user));
 
         mockMvc.perform(get("/api/users/1"))
             .andExpect(status().isOk())
@@ -89,10 +86,8 @@ class UserControllerTests extends BaseControllerTest {
 
     @Test
     @WithMockUser(roles = {"ADMIN"})
-    void returnsErrorWithInvalidUserId() throws Exception {
+    void getByIdWithInvalidId() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.empty());
-
-        mockMvc.perform(get("/api/users/1"))
-            .andExpect(status().isNotFound());
+        mockMvc.perform(get("/api/users/1")).andExpect(status().isNotFound());
     }
 }

@@ -1,8 +1,10 @@
 package com.example.demo;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,24 +28,24 @@ class CategoryControllerTests extends BaseControllerTest {
     @MockBean
     private CategoryService service;
 
-    private static Category createCategory() {
-        var category = new Category();
+    private final Category category = new Category();
+
+    @BeforeEach
+    void setup() {
         category.setId(1L);
         category.setName("foo");
-        return category;
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"/api/categories", "/api/categories/1"})
-    void blocksUnauthenticatedUsers(String path) throws Exception {
-        mockMvc.perform(get(path))
-            .andExpect(status().isForbidden());
+    void whenUnauthenticated(String path) throws Exception {
+        mockMvc.perform(get(path)).andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser
-    void getsAllCategories() throws Exception {
-        when(service.findAll()).thenReturn(List.of(createCategory()));
+    void getAll() throws Exception {
+        when(service.findAll()).thenReturn(List.of(category));
 
         mockMvc.perform(get("/api/categories"))
             .andExpect(status().isOk())
@@ -55,8 +57,8 @@ class CategoryControllerTests extends BaseControllerTest {
 
     @Test
     @WithMockUser
-    void getsCategoryById() throws Exception {
-        when(service.findById(1L)).thenReturn(Optional.of(createCategory()));
+    void getById() throws Exception {
+        when(service.findById(1L)).thenReturn(Optional.of(category));
 
         mockMvc.perform(get("/api/categories/1"))
             .andExpect(status().isOk())
@@ -67,10 +69,8 @@ class CategoryControllerTests extends BaseControllerTest {
 
     @Test
     @WithMockUser
-    void returnsErrorWithInvalidCategoryId() throws Exception {
+    void getByIdWithInvalidId() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.empty());
-
-        mockMvc.perform(get("/api/categories/1"))
-            .andExpect(status().isNotFound());
+        mockMvc.perform(get("/api/categories/1")).andExpect(status().isNotFound());
     }
 }

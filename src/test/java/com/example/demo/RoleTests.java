@@ -10,22 +10,22 @@ class RoleTests {
     private final Role role = new Role();
 
     @Test
-    void constructs() {
-        assertSoftly(softly -> {
-            softly.assertThat(role.getId()).isNull();
-            softly.assertThat(role.getName()).isNull();
-            softly.assertThat(role.getUsers()).isEmpty();
+    void constructor() {
+        assertSoftly(s -> {
+            s.assertThat(role.getId()).isNull();
+            s.assertThat(role.getName()).isNull();
+            s.assertThat(role.getUsers()).isEmpty();
         });
     }
 
     @Test
-    void setsId() {
+    void setId() {
         role.setId(1L);
         assertThat(role.getId()).isEqualTo(1);
     }
 
     @Test
-    void setsName() {
+    void setName() {
         role.setName("foo");
         assertThat(role.getName()).isEqualTo("foo");
     }

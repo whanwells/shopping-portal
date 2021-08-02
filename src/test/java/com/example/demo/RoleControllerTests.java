@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -26,32 +27,31 @@ class RoleControllerTests extends BaseControllerTest {
     @MockBean
     private RoleService service;
 
-    private static Role createRole() {
-        var role = new Role();
+    private final Role role = new Role();
+
+    @BeforeEach
+    void setup() {
         role.setId(1L);
         role.setName("foo");
-        return role;
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"/api/roles", "/api/roles/1"})
-    void blocksUnauthenticatedUsers(String path) throws Exception {
-        mockMvc.perform(get(path))
-            .andExpect(status().isForbidden());
+    void whenUnauthenticated(String path) throws Exception {
+        mockMvc.perform(get(path)).andExpect(status().isForbidden());
     }
 
     @ParameterizedTest
     @WithMockUser
     @ValueSource(strings = {"/api/roles", "/api/roles/1"})
-    void blocksUnauthorizedUsers(String path) throws Exception {
-        mockMvc.perform(get(path))
-            .andExpect(status().isForbidden());
+    void whenUnauthorized(String path) throws Exception {
+        mockMvc.perform(get(path)).andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(roles = {"ADMIN"})
-    void getsAllRoles() throws Exception {
-        when(service.findAll()).thenReturn(List.of(createRole()));
+    void getAll() throws Exception {
+        when(service.findAll()).thenReturn(List.of(role));
 
         mockMvc.perform(get("/api/roles"))
             .andExpect(status().isOk())
@@ -63,8 +63,8 @@ class RoleControllerTests extends BaseControllerTest {
 
     @Test
     @WithMockUser(roles = {"ADMIN"})
-    void getsRoleById() throws Exception {
-        when(service.findById(1L)).thenReturn(Optional.of(createRole()));
+    void getById() throws Exception {
+        when(service.findById(1L)).thenReturn(Optional.of(role));
 
         mockMvc.perform(get("/api/roles/1"))
             .andExpect(status().isOk())
@@ -75,10 +75,8 @@ class RoleControllerTests extends BaseControllerTest {
 
     @Test
     @WithMockUser(roles = {"ADMIN"})
-    void returnsErrorWithInvalidRoleId() throws Exception {
+    void getByIdWithInvalidId() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.empty());
-
-        mockMvc.perform(get("/api/roles/1"))
-            .andExpect(status().isNotFound());
+        mockMvc.perform(get("/api/roles/1")).andExpect(status().isNotFound());
     }
 }

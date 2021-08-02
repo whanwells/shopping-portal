@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,22 +28,44 @@ public class RegistrationControllerTests extends BaseControllerTest {
     @MockBean
     private RoleService roleService;
 
-    private static Role createRole() {
-        var role = new Role();
-        role.setId(1L);
-        role.setName("ROLE_USER");
-        return role;
+    private final User user = new User();
+
+    private final Role role = new Role();
+
+    @BeforeEach
+    void setupUser() {
+        user.setId(1L);
+        user.setEmail("foo@example.com");
+        user.setPassword("bar");
+        user.addRole(role);
     }
 
-    private static User createUser() {
-        var user = new User("foo@example.com", "bar");
-        user.setId(1L);
-        user.addRole(createRole());
-        return user;
+    @BeforeEach
+    void setupRole() {
+        role.setId(1L);
+        role.setName("ROLE_USER");
     }
 
     @Test
-    void returnsErrorWithInvalidRequest() throws Exception {
+    void register() throws Exception {
+        when(roleService.findByName("ROLE_USER")).thenReturn(Optional.of(role));
+        when(userService.save(any(User.class))).thenReturn(user);
+
+        mockMvc.perform(
+            post("/api/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\": \"foo@example.com\", \"password\": \"bar\"}"))
+            .andExpect(status().isCreated())
+            .andExpect(header().string("Location", "http://localhost/api/users/1"))
+            .andExpect(jsonPath("$.id").value(1))
+            .andExpect(jsonPath("$.email").value("foo@example.com"))
+            .andExpect(jsonPath("$.roles.size()").value(1))
+            .andExpect(jsonPath("$.roles[0].id").value(1))
+            .andExpect(jsonPath("$.roles[0].name").value("ROLE_USER"));
+    }
+
+    @Test
+    void registerWithInvalidRequest() throws Exception {
         mockMvc.perform(
             post("/api/register")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -51,9 +74,8 @@ public class RegistrationControllerTests extends BaseControllerTest {
     }
 
     @Test
-    void returnsErrorWithExistingEmail() throws Exception {
-        when(userService.existsByEmail("foo@example.com"))
-            .thenReturn(true);
+    void registerWithExistingEmail() throws Exception {
+        when(userService.existsByEmail("foo@example.com")).thenReturn(true);
 
         mockMvc.perform(
             post("/api/register")
@@ -64,7 +86,7 @@ public class RegistrationControllerTests extends BaseControllerTest {
     }
 
     @Test
-    void returnsErrorWhenRoleNotFound() throws Exception {
+    void registerWhenRoleNotFound() throws Exception {
         when(roleService.findByName("ROLE_USER"))
             .thenReturn(Optional.empty());
 
@@ -74,28 +96,5 @@ public class RegistrationControllerTests extends BaseControllerTest {
                 .content("{\"email\": \"foo@example.com\", \"password\": \"bar\"}"))
                 .andExpect(status().isInternalServerError())
                 .andExpect(status().reason(is("Unable to assign ROLE_USER")));
-    }
-
-    @Test
-    void returnsUserWhenSuccessful() throws Exception {
-        var user = createUser();
-
-        when(roleService.findByName("ROLE_USER"))
-            .thenReturn(Optional.of(createRole()));
-
-        when(userService.save(any(User.class)))
-            .thenReturn(user);
-
-        mockMvc.perform(
-            post("/api/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"email\": \"foo@example.com\", \"password\": \"bar\"}"))
-                .andExpect(status().isCreated())
-                .andExpect(header().string("Location", "http://localhost/api/users/1"))
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.email").value("foo@example.com"))
-                .andExpect(jsonPath("$.roles.size()").value(1))
-                .andExpect(jsonPath("$.roles[0].id").value(1))
-                .andExpect(jsonPath("$.roles[0].name").value("ROLE_USER"));
     }
 }

@@ -15,23 +15,23 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CategoryRepositoryServiceTests {
 
-    @Mock
-    private Category category;
+    @InjectMocks
+    private CategoryRepositoryService service;
 
     @Mock
     private CategoryRepository repository;
 
-    @InjectMocks
-    private CategoryRepositoryService service;
+    @Mock
+    private Category category;
 
     @Test
-    void findsAllCategories() {
+    void findAll() {
         when(repository.findAll()).thenReturn(List.of(category));
         assertThat(service.findAll()).hasSize(1);
     }
 
     @Test
-    void findsCategoryById() {
+    void findById() {
         when(repository.findById(1L)).thenReturn(Optional.of(category));
         assertThat(service.findById(1L)).isPresent();
     }

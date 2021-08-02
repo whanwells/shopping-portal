@@ -17,17 +17,17 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CustomUserDetailsServiceTests {
 
-    @Mock
-    private User user;
+    @InjectMocks
+    private CustomUserDetailsService customUserDetailsService;
 
     @Mock
     private UserService userService;
 
-    @InjectMocks
-    private CustomUserDetailsService customUserDetailsService;
+    @Mock
+    private User user;
 
     @Test
-    void loadsUsersByEmail() {
+    void loadUserByUsername() {
         when(user.getEmail()).thenReturn("foo@example.com");
         when(user.getPassword()).thenReturn("bar");
         when(user.getRoles()).thenReturn(Set.of());
@@ -38,7 +38,7 @@ class CustomUserDetailsServiceTests {
     }
 
     @Test
-    void throwsIfUserNotFound() {
+    void loadUserByUsernameWithInvalidEmail() {
         when(userService.findByEmail("foo@example.com")).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(UsernameNotFoundException.class)

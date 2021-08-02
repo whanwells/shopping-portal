@@ -20,6 +20,9 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class TokenManagerTests {
 
+    @InjectMocks
+    private TokenManager tokenManager;
+
     @Mock
     private JWTCreator.Builder builder;
 
@@ -32,14 +35,11 @@ class TokenManagerTests {
     @Mock
     private DecodedJWT jwt;
 
-    @InjectMocks
-    private TokenManager tokenManager;
-
     @Mock
     private CustomUser customUser;
 
     @Test
-    void createsTokens() {
+    void create() {
         when(customUser.getId()).thenReturn(1L);
         when(builder.withSubject("1")).thenReturn(builder);
         when(builder.withExpiresAt(any(Date.class))).thenReturn(builder);
@@ -49,27 +49,27 @@ class TokenManagerTests {
     }
 
     @Test
-    void returnsEmptyWhenExtractingFromNullAuthorizationHeader() {
-        assertThat(tokenManager.extract(null)).isEmpty();
-    }
-
-    @Test
-    void returnsEmptyWhenExtractingFromNonBearerAuthorizationHeader() {
-        assertThat(tokenManager.extract("")).isEmpty();
-    }
-
-    @Test
-    void returnsEmptyWhenExtractingFromAuthorizationHeaderWithoutBearerToken() {
-        assertThat(tokenManager.extract("Bearer ")).isEmpty();
-    }
-
-    @Test
-    void returnsTokenWhenExtractingFromAuthorizationHeaderWithBearerToken() {
+    void extract() {
         assertThat(tokenManager.extract("Bearer foo")).contains("foo");
     }
 
     @Test
-    void decodesTokens() {
+    void extractWithNull() {
+        assertThat(tokenManager.extract(null)).isEmpty();
+    }
+
+    @Test
+    void extractWithEmptyString() {
+        assertThat(tokenManager.extract("")).isEmpty();
+    }
+
+    @Test
+    void extractWithBearerAndNoToken() {
+        assertThat(tokenManager.extract("Bearer ")).isEmpty();
+    }
+
+    @Test
+    void decode() {
         when(verifier.verify("foo")).thenReturn(jwt);
         assertThat(tokenManager.decode("foo")).isEqualTo(jwt);
     }

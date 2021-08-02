@@ -15,44 +15,45 @@ class RegistrationRequestTests {
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @Test
-    void constructs() {
+    void constructor() {
         var request = new RegistrationRequest("foo@example.com", "bar");
 
-        assertSoftly(softly -> {
-            softly.assertThat(request.getEmail()).isEqualTo("foo@example.com");
-            softly.assertThat(request.getPassword()).isEqualTo("bar");
+        assertSoftly(s -> {
+            s.assertThat(request.getEmail()).isEqualTo("foo@example.com");
+            s.assertThat(request.getPassword()).isEqualTo("bar");
         });
     }
 
     @Test
-    void failsValidationWhenEmailNull() {
-        var request = new RegistrationRequest(null, null);
-        assertThat(validator.validateProperty(request, "email")).isNotEmpty();
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"", " ", "foo"})
-    void failsValidationWhenEmailMalformed(String value) {
-        var request = new RegistrationRequest(value, null);
-        assertThat(validator.validateProperty(request, "email")).isNotEmpty();
+    void validate() {
+        var request = new RegistrationRequest("foo@example.com", "bar");
+        assertThat(validator.validateProperty(request, "password")).isEmpty();
     }
 
     @Test
-    void failsValidationWhenPasswordNull() {
+    void validateWithNull() {
         var request = new RegistrationRequest(null, null);
-        assertThat(validator.validateProperty(request, "password")).isNotEmpty();
+
+        assertSoftly(s -> {
+            assertThat(validator.validateProperty(request, "email")).isNotEmpty();
+            assertThat(validator.validateProperty(request, "password")).isNotEmpty();
+        });
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"", " "})
-    void failsValidationWhenPasswordBlank(String value) {
-        var request = new RegistrationRequest(null, value);
-        assertThat(validator.validateProperty(request, "password")).isNotEmpty();
+    void validateWithBlankFields(String value) {
+        var request = new RegistrationRequest(value, value);
+
+        assertSoftly(s -> {
+            assertThat(validator.validateProperty(request, "email")).isNotEmpty();
+            assertThat(validator.validateProperty(request, "password")).isNotEmpty();
+        });
     }
 
     @Test
-    void passesValidationWhenAllArgsValid() {
-        var request = new RegistrationRequest("foo@example.com", "bar");
-        assertThat(validator.validateProperty(request, "password")).isEmpty();
+    void validateWithMalformedEmail() {
+        var request = new RegistrationRequest("foo", null);
+        assertThat(validator.validateProperty(request, "email")).isNotEmpty();
     }
 }

@@ -2,6 +2,8 @@ package com.example.demo;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -14,25 +16,25 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class ProductTests {
 
+    private final Product product = new Product();
+
     @Mock
     private Category category;
 
-    private final Product product = new Product();
-
     @Test
-    void constructs() {
-        assertSoftly(softly -> {
-            softly.assertThat(product.getId()).isNull();
-            softly.assertThat(product.getName()).isNull();
-            softly.assertThat(product.getReleaseDate()).isNull();
-            softly.assertThat(product.getMsrp()).isNull();
-            softly.assertThat(product.getQuantity()).isNull();
-            softly.assertThat(product.getCategory()).isNull();
+    void constructor() {
+        assertSoftly(s -> {
+            s.assertThat(product.getId()).isNull();
+            s.assertThat(product.getName()).isNull();
+            s.assertThat(product.getReleaseDate()).isNull();
+            s.assertThat(product.getMsrp()).isNull();
+            s.assertThat(product.getQuantity()).isNull();
+            s.assertThat(product.getCategory()).isNull();
         });
     }
 
     @Test
-    void setsId() {
+    void setId() {
         product.setId(1L);
         assertThat(product.getId()).isEqualTo(1);
     }
@@ -44,32 +46,32 @@ class ProductTests {
     }
 
     @Test
-    void setsReleaseDate() {
+    void setReleaseDate() {
         var date = LocalDate.now();
         product.setReleaseDate(date);
         assertThat(product.getReleaseDate()).isEqualTo(date);
     }
 
     @Test
-    void setsMsrp() {
+    void setMsrp() {
         product.setMsrp(9.99);
         assertThat(product.getMsrp()).isEqualTo(9.99);
     }
 
     @Test
-    void setsQuantity() {
+    void setQuantity() {
         product.setQuantity(5);
         assertThat(product.getQuantity()).isEqualTo(5);
     }
 
     @Test
-    void setsCategory() {
+    void setCategory() {
         product.setCategory(category);
         assertThat(product.getCategory()).isEqualTo(category);
     }
 
     @Test
-    void getsCategoryName() {
+    void getCategoryName() {
         when(category.getName()).thenReturn("foo");
 
         product.setCategory(category);
@@ -77,14 +79,15 @@ class ProductTests {
     }
 
     @Test
-    void isStockedWhenQuantityPositive() {
+    void isStockedWithPositiveQuantity() {
         product.setQuantity(1);
         assertThat(product.isStocked()).isTrue();
     }
 
-    @Test
-    void isNotStockedWhenQuantityNotPositive() {
-        product.setQuantity(0);
+    @ParameterizedTest
+    @ValueSource(ints = {0, -1})
+    void isStockedWithNonPositiveQuantity(int quantity) {
+        product.setQuantity(quantity);
         assertThat(product.isStocked()).isFalse();
     }
 }
