@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class TokenManager {
 
     private static final String PREFIX = "Bearer ";
@@ -23,12 +25,6 @@ public class TokenManager {
     private final JWTCreator.Builder builder;
     private final JWTVerifier verifier;
     private final Algorithm algorithm;
-
-    public TokenManager(JWTCreator.Builder builder, JWTVerifier verifier, Algorithm algorithm) {
-        this.builder = builder;
-        this.verifier = verifier;
-        this.algorithm = algorithm;
-    }
 
     public String create(CustomUser user) {
         return builder

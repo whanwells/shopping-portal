@@ -1,18 +1,16 @@
 package com.example.demo;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserRepositoryService implements UserService {
 
     private final UserRepository repository;
-
-    public UserRepositoryService(UserRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public List<User> findAll() {

@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -13,19 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final CustomUserDetailsService customUserDetailsService;
-
     private final TokenManager tokenManager;
-
     private final ObjectMapper objectMapper;
-
-    public WebSecurityConfiguration(CustomUserDetailsService customUserDetailsService, TokenManager tokenManager, ObjectMapper objectMapper) {
-        this.customUserDetailsService = customUserDetailsService;
-        this.tokenManager = tokenManager;
-        this.objectMapper = objectMapper;
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

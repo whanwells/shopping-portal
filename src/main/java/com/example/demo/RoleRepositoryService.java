@@ -1,18 +1,16 @@
 package com.example.demo;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class RoleRepositoryService implements RoleService {
 
     private final RoleRepository repository;
-
-    public RoleRepositoryService(RoleRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public List<Role> findAll() {

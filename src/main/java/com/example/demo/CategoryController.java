@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,13 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")
+@RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryService service;
-
-    public CategoryController(CategoryService service) {
-        this.service = service;
-    }
 
     @GetMapping
     List<Category> getAll() {

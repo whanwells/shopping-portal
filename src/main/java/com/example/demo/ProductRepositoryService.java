@@ -1,18 +1,16 @@
 package com.example.demo;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductRepositoryService implements ProductService {
 
     private final ProductRepository repository;
-
-    public ProductRepositoryService(ProductRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public List<Product> findAll() {

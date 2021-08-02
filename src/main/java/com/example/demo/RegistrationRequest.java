@@ -1,10 +1,12 @@
 package com.example.demo;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+@RequiredArgsConstructor
 @Getter
 public class RegistrationRequest {
 
@@ -14,9 +16,4 @@ public class RegistrationRequest {
 
     @NotBlank
     private final String password;
-
-    public RegistrationRequest(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
 }

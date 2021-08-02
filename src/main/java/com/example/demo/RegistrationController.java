@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,17 +13,12 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
+@RequiredArgsConstructor
 public class RegistrationController {
 
     private final UserService userService;
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
-
-    public RegistrationController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
-        this.userService = userService;
-        this.roleService = roleService;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @PostMapping("/api/register")
     @Transactional

@@ -15,16 +15,6 @@ class RegistrationRequestTests {
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @Test
-    void constructor() {
-        var request = new RegistrationRequest("foo@example.com", "bar");
-
-        assertSoftly(s -> {
-            s.assertThat(request.getEmail()).isEqualTo("foo@example.com");
-            s.assertThat(request.getPassword()).isEqualTo("bar");
-        });
-    }
-
-    @Test
     void validate() {
         var request = new RegistrationRequest("foo@example.com", "bar");
         assertThat(validator.validateProperty(request, "password")).isEmpty();
