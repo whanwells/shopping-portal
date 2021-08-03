@@ -49,6 +49,12 @@ class UserRepositoryServiceTests {
     }
 
     @Test
+    void existsById() {
+        when(repository.existsById(1L)).thenReturn(true);
+        assertThat(service.existsById(1L)).isTrue();
+    }
+
+    @Test
     void save() {
         when(repository.save(user)).thenReturn(user);
         assertThat(service.save(user)).isEqualTo(user);

@@ -21,6 +21,9 @@ class UserTests {
     @Mock
     private List<User> roleUsers;
 
+    @Mock
+    private Order order;
+
     @Test
     void constructorWithoutId() {
         var user = new User("foo@example.com", "bar");
@@ -51,5 +54,19 @@ class UserTests {
 
         assertThat(user.getRoles()).doesNotContain(role);
         verify(roleUsers).remove(user);
+    }
+
+    @Test
+    void addOrder() {
+        var user = new User();
+        user.addOrder(order);
+        verify(order).setUser(user);
+    }
+
+    @Test
+    void removeOrder() {
+        var user = new User();
+        user.removeOrder(order);
+        verify(order).setUser(null);
     }
 }

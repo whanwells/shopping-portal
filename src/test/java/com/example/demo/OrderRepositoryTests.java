@@ -9,33 +9,31 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-class UserRepositoryTests {
+class OrderRepositoryTests {
 
     @Autowired
-    private UserRepository repository;
+    private OrderRepository repository;
 
     @Autowired
     private TestEntityManager entityManager;
 
-    private long id;
+    private long userId;
+    private long orderId;
 
     @BeforeEach
     void setup() {
-        id = entityManager.persistAndGetId(new User("foo@example.com", "bar"), Long.class);
+        var user = new User("foo@example.com", "bar");
+        userId = entityManager.persistAndGetId(user, Long.class);
+        orderId = entityManager.persistAndGetId(Order.from(user), Long.class);
     }
 
     @Test
-    void findByEmail() {
-        assertThat(repository.findByEmail("foo@example.com")).isPresent();
+    void findByUser_Id() {
+        assertThat(repository.findByUser_Id(userId)).hasSize(1);
     }
 
     @Test
-    void existsByEmail() {
-        assertThat(repository.existsByEmail("foo@example.com")).isTrue();
-    }
-
-    @Test
-    void existsById() {
-        assertThat(repository.existsById(id)).isTrue();
+    void findByUser_IdAndId() {
+        assertThat(repository.findByUser_IdAndId(userId, orderId)).isPresent();
     }
 }
