@@ -28,6 +28,11 @@ public class OrderRepositoryService implements OrderService {
     }
 
     @Override
+    public boolean existsByOrderIdAndProductId(long orderId, long productId) {
+        return repository.existsByIdAndLines_Product_Id(orderId, productId);
+    }
+
+    @Override
     public Order save(Order order) {
         return repository.save(order);
     }

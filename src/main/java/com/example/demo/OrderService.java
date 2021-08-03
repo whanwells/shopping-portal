@@ -11,5 +11,7 @@ public interface OrderService {
 
     Optional<Order> findByUserIdAndOrderId(long userId, long orderId);
 
+    boolean existsByOrderIdAndProductId(long orderId, long productId);
+
     Order save(Order order);
 }

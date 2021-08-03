@@ -43,6 +43,12 @@ class OrderRepositoryServiceTests {
     }
 
     @Test
+    void existsByOrderIdAndProjectId() {
+        when(repository.existsByIdAndLines_Product_Id(1L, 1L)).thenReturn(true);
+        assertThat(service.existsByOrderIdAndProductId(1L, 1L)).isTrue();
+    }
+
+    @Test
     void save() {
         when(repository.save(order)).thenReturn(order);
         assertThat(service.save(order)).isEqualTo(order);

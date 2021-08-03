@@ -23,4 +23,12 @@ public class OrderLine {
 
     @Column(nullable = false)
     private Integer quantity;
+
+    public static OrderLine of(Order order, Product product, int quantity) {
+        var orderLine = new OrderLine();
+        orderLine.setOrder(order);
+        orderLine.setProduct(product);
+        orderLine.setQuantity(quantity);
+        return orderLine;
+    }
 }
