@@ -124,7 +124,7 @@ public class OrderController {
 
     @DeleteMapping("/{userId}/{orderId}/{lineId}")
     @Transactional
-    public ResponseEntity<Void> delete(
+    public ResponseEntity<Void> deleteLine(
         Principal principal,
         @PathVariable long userId,
         @PathVariable long orderId,
