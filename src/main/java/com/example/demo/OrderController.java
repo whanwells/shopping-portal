@@ -30,7 +30,7 @@ public class OrderController {
     @GetMapping("/{userId}")
     @Transactional
     public List<OrderResponse> getByUserId(Principal principal, @PathVariable long userId) {
-        ForbiddenException.throwIfPrincipalMismatch(principal, String.valueOf(userId));
+        ForbiddenException.throwIfPrincipalMismatch(principal, userId);
 
         if (!userService.existsById(userId)) {
             throw new ResourceNotFoundException(Order.class);
@@ -42,7 +42,7 @@ public class OrderController {
     @PostMapping("/{userId}")
     @Transactional
     public ResponseEntity<OrderResponse> create(Principal principal, @PathVariable long userId) {
-        ForbiddenException.throwIfPrincipalMismatch(principal, String.valueOf(userId));
+        ForbiddenException.throwIfPrincipalMismatch(principal, userId);
 
         var user = userService.findById(userId)
             .orElseThrow(() -> new ResourceNotFoundException(Order.class));
@@ -63,7 +63,7 @@ public class OrderController {
 
     @GetMapping("/{userId}/{orderId}")
     public OrderResponse getByUserIdAndOrderId(Principal principal, @PathVariable long userId, @PathVariable long orderId) {
-        ForbiddenException.throwIfPrincipalMismatch(principal, String.valueOf(userId));
+        ForbiddenException.throwIfPrincipalMismatch(principal, userId);
 
         var order = orderService.findByUserIdAndOrderId(userId, orderId)
             .orElseThrow(() -> new ResourceNotFoundException(Order.class));
@@ -79,7 +79,7 @@ public class OrderController {
         @PathVariable long orderId,
         @Valid @RequestBody OrderLinePostRequest request
     ) {
-        ForbiddenException.throwIfPrincipalMismatch(principal, String.valueOf(userId));
+        ForbiddenException.throwIfPrincipalMismatch(principal, userId);
 
         var order = orderService.findByUserIdAndOrderId(userId, orderId)
             .orElseThrow(() -> new ResourceNotFoundException(Order.class));
@@ -110,7 +110,7 @@ public class OrderController {
         @PathVariable long lineId,
         @RequestBody OrderLinePatchRequest request
     ) {
-        ForbiddenException.throwIfPrincipalMismatch(principal, String.valueOf(userId));
+        ForbiddenException.throwIfPrincipalMismatch(principal, userId);
 
         var orderLine = orderLineService.findByUserIdAndOrderIdAndLineId(userId, orderId, lineId)
             .orElseThrow(() -> new ResourceNotFoundException(OrderLine.class));
@@ -130,7 +130,7 @@ public class OrderController {
         @PathVariable long orderId,
         @PathVariable long lineId
     ) {
-        ForbiddenException.throwIfPrincipalMismatch(principal, String.valueOf(userId));
+        ForbiddenException.throwIfPrincipalMismatch(principal, userId);
 
         var orderLine = orderLineService.findByUserIdAndOrderIdAndLineId(userId, orderId, lineId)
             .orElseThrow(() -> new ResourceNotFoundException(OrderLine.class));

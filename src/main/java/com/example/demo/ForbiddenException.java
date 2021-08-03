@@ -16,4 +16,10 @@ public class ForbiddenException extends ResponseStatusException {
             throw new ForbiddenException();
         }
     }
+
+    static void throwIfPrincipalMismatch(Principal principal, long value) {
+        if (!principal.getName().equals(String.valueOf(value))) {
+            throw new ForbiddenException();
+        }
+    }
 }
