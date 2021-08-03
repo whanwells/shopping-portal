@@ -47,6 +47,10 @@ public class OrderController {
         var user = userService.findById(userId)
             .orElseThrow(() -> new ResourceNotFoundException(Order.class));
 
+        if (orderService.existsByUserIdAndOpen(userId)) {
+            throw new BadRequestException("There can only be one open order per user");
+        }
+
         var order = orderService.save(Order.from(user));
 
         var location = ServletUriComponentsBuilder.fromCurrentRequest()

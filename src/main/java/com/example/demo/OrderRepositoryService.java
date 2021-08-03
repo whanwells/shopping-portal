@@ -23,6 +23,11 @@ public class OrderRepositoryService implements OrderService {
     }
 
     @Override
+    public boolean existsByUserIdAndOpen(long userId) {
+        return repository.existsByUser_IdAndDateNull(userId);
+    }
+
+    @Override
     public Optional<Order> findByUserIdAndOrderId(long userId, long orderId) {
         return repository.findByUser_IdAndId(userId, orderId);
     }

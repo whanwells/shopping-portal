@@ -9,6 +9,8 @@ public interface OrderService {
 
     List<Order> findByUserId(long id);
 
+    boolean existsByUserIdAndOpen(long userId);
+
     Optional<Order> findByUserIdAndOrderId(long userId, long orderId);
 
     boolean existsByOrderIdAndProductId(long orderId, long productId);
