@@ -1,7 +1,7 @@
 package com.example.demo.user;
 
-import com.example.demo.Order;
 import com.example.demo.user.cart.Item;
+import com.example.demo.user.order.Order;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,15 +42,5 @@ public class User {
     public void removeRole(Role role) {
         roles.remove(role);
         role.getUsers().remove(this);
-    }
-
-    public void addOrder(Order order) {
-        orders.add(order);
-        order.setUser(this);
-    }
-
-    public void removeOrder(Order order) {
-        orders.remove(order);
-        order.setUser(null);
     }
 }

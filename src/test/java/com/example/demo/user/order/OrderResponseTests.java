@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.user.order;
 
 import com.example.demo.user.User;
 import org.junit.jupiter.api.BeforeEach;

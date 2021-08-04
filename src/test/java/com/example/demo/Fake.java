@@ -5,8 +5,10 @@ import com.example.demo.product.Category;
 import com.example.demo.product.Product;
 import com.example.demo.user.Role;
 import com.example.demo.user.User;
+import com.example.demo.user.order.Order;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Fake {
 
@@ -47,5 +49,12 @@ public class Fake {
         item.setProduct(product);
         item.setQuantity(9);
         return item;
+    }
+
+    public static Order order(User user) {
+        var order = new Order();
+        order.setUser(user);
+        order.setDate(LocalDateTime.now());
+        return order;
     }
 }

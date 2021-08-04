@@ -26,8 +26,8 @@ public class ItemService {
         return repository.findByUserIdAndProductId(userId, productId);
     }
 
-    public Item save(Item item) {
-        return repository.save(item);
+    public Long save(Item item) {
+        return repository.save(item).getId();
     }
 
     public void delete(Item item) {

@@ -41,4 +41,11 @@ class ProductServiceTests {
         when(repository.findById(1L)).thenReturn(Optional.of(product));
         assertThat(service.findById(1L)).isPresent();
     }
+
+    @Test
+    void save() {
+        when(repository.save(product)).thenReturn(product);
+        when(product.getId()).thenReturn(1L);
+        assertThat(service.save(product)).isEqualTo(product.getId());
+    }
 }

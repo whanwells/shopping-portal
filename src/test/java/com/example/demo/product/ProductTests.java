@@ -22,4 +22,11 @@ class ProductTests {
         product.setQuantity(quantity);
         assertThat(product.isStocked()).isFalse();
     }
+
+    @Test
+    void reduceQuantityBy() {
+        product.setQuantity(5);
+        product.reduceQuantityBy(4);
+        assertThat(product.getQuantity()).isEqualTo(1);
+    }
 }

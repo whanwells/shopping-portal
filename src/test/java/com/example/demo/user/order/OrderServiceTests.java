@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.user.order;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -6,17 +6,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class OrderRepositoryServiceTests {
+class OrderServiceTests {
 
     @InjectMocks
-    private OrderRepositoryService service;
+    private OrderService service;
 
     @Mock
     private OrderRepository repository;
@@ -43,14 +46,10 @@ class OrderRepositoryServiceTests {
     }
 
     @Test
-    void existsByOrderIdAndProjectId() {
-        when(repository.existsByIdAndLines_Product_Id(1L, 1L)).thenReturn(true);
-        assertThat(service.existsByOrderIdAndProductId(1L, 1L)).isTrue();
-    }
-
-    @Test
     void save() {
         when(repository.save(order)).thenReturn(order);
-        assertThat(service.save(order)).isEqualTo(order);
+        when(order.getId()).thenReturn(1L);
+        assertThat(service.save(order)).isEqualTo(order.getId());
+        verify(order).setDate(any(LocalDateTime.class));
     }
 }

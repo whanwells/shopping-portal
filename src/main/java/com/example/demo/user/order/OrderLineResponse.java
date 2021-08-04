@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.user.order;
 
 import com.example.demo.product.ProductResponse;
 import lombok.Getter;

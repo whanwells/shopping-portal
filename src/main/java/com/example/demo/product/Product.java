@@ -1,6 +1,6 @@
 package com.example.demo.product;
 
-import com.example.demo.OrderLine;
+import com.example.demo.user.order.OrderLine;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,5 +39,9 @@ public class Product {
 
     public boolean isStocked() {
         return quantity > 0;
+    }
+
+    public void reduceQuantityBy(Integer amount) {
+        quantity -= amount;
     }
 }
