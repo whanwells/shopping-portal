@@ -3,6 +3,7 @@ import type { VFC } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
+import { Redirect } from "react-router";
 import { useToken } from "../auth";
 import { LoginCard } from "./LoginCard";
 
@@ -12,14 +13,18 @@ type LoginFormInputs = {
 };
 
 export const LoginForm: VFC = () => {
+  const { token, setToken } = useToken();
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<LoginFormInputs>();
 
-  const { setToken } = useToken();
-  const [loading, setLoading] = useState(false);
+  if (token) {
+    return <Redirect to="/" />;
+  }
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     setLoading(true);
@@ -32,11 +37,11 @@ export const LoginForm: VFC = () => {
     if (response.ok) {
       const { token } = await response.json();
       setToken(token);
+      return <Redirect to="/" />;
     } else {
-      console.log('access denied');
+      console.log("access denied");
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (

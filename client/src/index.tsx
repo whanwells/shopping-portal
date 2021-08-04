@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import { TokenProvider } from "./auth";
@@ -7,9 +8,11 @@ import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <TokenProvider>
-      <App />
-    </TokenProvider>
+    <BrowserRouter>
+      <TokenProvider>
+        <App />
+      </TokenProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );
