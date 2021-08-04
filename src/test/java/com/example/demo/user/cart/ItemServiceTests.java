@@ -1,4 +1,4 @@
-package com.example.demo.cart;
+package com.example.demo.user.cart;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

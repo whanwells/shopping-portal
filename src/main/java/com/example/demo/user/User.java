@@ -1,7 +1,7 @@
 package com.example.demo.user;
 
 import com.example.demo.Order;
-import com.example.demo.cart.Item;
+import com.example.demo.user.cart.Item;
 import lombok.Getter;
 import lombok.Setter;
 

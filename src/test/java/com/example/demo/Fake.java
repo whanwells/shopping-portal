@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.cart.Item;
+import com.example.demo.user.cart.Item;
 import com.example.demo.product.Category;
 import com.example.demo.product.Product;
 import com.example.demo.user.Role;
