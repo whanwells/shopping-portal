@@ -38,6 +38,12 @@ val reactScriptsTest = task<NpmTask>("reactScriptsTest") {
     args.set(listOf("test"))
 }
 
+val prettier = task<NpmTask>("prettier") {
+    description = "Runs Prettier."
+    dependsOn(tasks.npmInstall)
+    args.set(listOf("run", "prettier"))
+}
+
 tasks.assemble {
     dependsOn(reactScriptsBuild)
 }
