@@ -5,6 +5,12 @@ plugins {
     id("com.github.node-gradle.node") version "3.1.0"
 }
 
+node {
+    download.set(true)
+    version.set("14.17.4")
+    npmVersion.set("7.20.3")
+}
+
 tasks.npmInstall {
     inputs.file("package.json")
 }
