@@ -11,13 +11,13 @@ public class ForbiddenException extends ResponseStatusException {
         super(HttpStatus.FORBIDDEN);
     }
 
-    static void throwIfPrincipalMismatch(Principal principal, String value) {
+    public static void throwIfPrincipalMismatch(Principal principal, String value) {
         if (!principal.getName().equals(value)) {
             throw new ForbiddenException();
         }
     }
 
-    static void throwIfPrincipalMismatch(Principal principal, long value) {
+    public static void throwIfPrincipalMismatch(Principal principal, long value) {
         if (!principal.getName().equals(String.valueOf(value))) {
             throw new ForbiddenException();
         }
