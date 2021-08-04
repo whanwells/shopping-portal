@@ -5,7 +5,7 @@ import com.example.demo.exception.ForbiddenException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.product.ProductService;
 import com.example.demo.user.UserService;
-import com.example.demo.user.cart.ItemService;
+import com.example.demo.user.cart.CartItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ public class OrderController {
 
     private final OrderService orderService;
     private final UserService userService;
-    private final ItemService itemService;
+    private final CartItemService cartItemService;
     private final ProductService productService;
 
     @GetMapping
@@ -46,7 +46,7 @@ public class OrderController {
             .orElseThrow(() -> new ResourceNotFoundException(Order.class));
 
         // Does the user have items in their cart?
-        var items = itemService.findByUserId(userId);
+        var items = cartItemService.findByUserId(userId);
 
         if (items.isEmpty()) {
             throw new BadRequestException("Cannot place an order with an empty cart");
@@ -81,7 +81,7 @@ public class OrderController {
         var orderId = orderService.save(order);
 
         // Clear the user's cart
-        itemService.deleteByUserId(userId);
+        cartItemService.deleteByUserId(userId);
 
         var location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{orderId}")

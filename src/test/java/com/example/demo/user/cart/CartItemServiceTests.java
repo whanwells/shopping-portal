@@ -14,46 +14,46 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ItemServiceTests {
+class CartItemServiceTests {
 
     @InjectMocks
-    private ItemService service;
+    private CartItemService service;
 
     @Mock
-    private ItemRepository repository;
+    private CartItemRepository repository;
 
     @Mock
-    private Item item;
+    private CartItem cartItem;
 
     @Test
     void findById() {
-        when(repository.findById(1L)).thenReturn(Optional.of(item));
+        when(repository.findById(1L)).thenReturn(Optional.of(cartItem));
         assertThat(service.findById(1L)).isPresent();
     }
 
     @Test
     void findByUserId() {
-        when(repository.findByUserId(1L)).thenReturn(List.of(item));
+        when(repository.findByUserId(1L)).thenReturn(List.of(cartItem));
         assertThat(service.findByUserId(1L)).isNotEmpty();
     }
 
     @Test
     void findByUserIdAndProductId() {
-        when(repository.findByUserIdAndProductId(1L, 1L)).thenReturn(Optional.of(item));
+        when(repository.findByUserIdAndProductId(1L, 1L)).thenReturn(Optional.of(cartItem));
         assertThat(service.findByUserIdAndProductId(1L, 1L)).isPresent();
     }
 
     @Test
     void save() {
-        when(repository.save(item)).thenReturn(item);
-        when(item.getId()).thenReturn(1L);
-        assertThat(service.save(item)).isEqualTo(item.getId());
+        when(repository.save(cartItem)).thenReturn(cartItem);
+        when(cartItem.getId()).thenReturn(1L);
+        assertThat(service.save(cartItem)).isEqualTo(cartItem.getId());
     }
 
     @Test
     void delete() {
-        service.delete(item);
-        verify(repository).delete(item);
+        service.delete(cartItem);
+        verify(repository).delete(cartItem);
     }
 
     @Test

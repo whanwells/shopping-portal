@@ -1,6 +1,6 @@
 package com.example.demo.user;
 
-import com.example.demo.user.cart.Item;
+import com.example.demo.user.cart.CartItem;
 import com.example.demo.user.order.Order;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +29,7 @@ public class User {
     private final List<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Item> items = new ArrayList<>();
+    private List<CartItem> cartItems = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private final List<Order> orders = new ArrayList<>();

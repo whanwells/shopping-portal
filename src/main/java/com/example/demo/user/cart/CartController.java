@@ -20,12 +20,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartController {
 
-    private final ItemService itemService;
+    private final CartItemService cartItemService;
     private final UserService userService;
     private final ProductService productService;
 
     @GetMapping
-    public List<ItemResponse> get(@PathVariable Long userId, Principal principal) {
+    public List<CartItemResponse> get(@PathVariable Long userId, Principal principal) {
         ForbiddenException.throwIfPrincipalMismatch(principal, userId);
 
         // Does the user exist?
@@ -33,14 +33,14 @@ public class CartController {
             throw new ResourceNotFoundException(User.class);
         }
 
-        return ItemResponse.from(itemService.findByUserId(userId));
+        return CartItemResponse.from(cartItemService.findByUserId(userId));
     }
 
     @PutMapping("/{productId}")
-    public ItemResponse put(
+    public CartItemResponse put(
         @PathVariable Long userId,
         @PathVariable Long productId,
-        @RequestBody ItemPutRequest request,
+        @RequestBody CartItemPutRequest request,
         Principal principal
     ) {
         ForbiddenException.throwIfPrincipalMismatch(principal, userId);
@@ -59,18 +59,18 @@ public class CartController {
         }
 
         // Does the product already exist in the cart?
-        var item = itemService.findByUserIdAndProductId(userId, productId)
+        var item = cartItemService.findByUserIdAndProductId(userId, productId)
             .orElseGet(() -> {
                 // Nope, create a new item
-                var newItem = new Item();
+                var newItem = new CartItem();
                 newItem.setUser(user);
                 newItem.setProduct(product);
                 return newItem;
             });
 
         item.setQuantity(request.getQuantity());
-        itemService.save(item);
-        return ItemResponse.from(item);
+        cartItemService.save(item);
+        return CartItemResponse.from(item);
     }
 
     @DeleteMapping
@@ -82,7 +82,7 @@ public class CartController {
             throw new ResourceNotFoundException(User.class);
         }
 
-        itemService.deleteByUserId(userId);
+        cartItemService.deleteByUserId(userId);
         return ResponseEntity.noContent().build();
     }
 
@@ -91,7 +91,7 @@ public class CartController {
         ForbiddenException.throwIfPrincipalMismatch(principal, userId);
 
         // Does the user/product exist?
-        var item = itemService.findByUserIdAndProductId(userId, productId)
+        var item = cartItemService.findByUserIdAndProductId(userId, productId)
             .orElseThrow(ResourceNotFoundException::new);
 
         // Does the user own the item?
@@ -99,7 +99,7 @@ public class CartController {
             throw new ForbiddenException();
         }
 
-        itemService.delete(item);
+        cartItemService.delete(item);
         return ResponseEntity.noContent().build();
     }
 }

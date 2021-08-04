@@ -10,28 +10,28 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class ItemService {
+public class CartItemService {
 
-    private final ItemRepository repository;
+    private final CartItemRepository repository;
 
-    public Optional<Item> findById(Long itemId) {
+    public Optional<CartItem> findById(Long itemId) {
         return repository.findById(itemId);
     }
 
-    public List<Item> findByUserId(Long userId) {
+    public List<CartItem> findByUserId(Long userId) {
         return repository.findByUserId(userId);
     }
 
-    public Optional<Item> findByUserIdAndProductId(Long userId, Long productId) {
+    public Optional<CartItem> findByUserIdAndProductId(Long userId, Long productId) {
         return repository.findByUserIdAndProductId(userId, productId);
     }
 
-    public Long save(Item item) {
-        return repository.save(item).getId();
+    public Long save(CartItem cartItem) {
+        return repository.save(cartItem).getId();
     }
 
-    public void delete(Item item) {
-        repository.delete(item);
+    public void delete(CartItem cartItem) {
+        repository.delete(cartItem);
     }
 
     public void deleteByUserId(Long userId) {

@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.user.cart.Item;
+import com.example.demo.user.cart.CartItem;
 import com.example.demo.product.Category;
 import com.example.demo.product.Product;
 import com.example.demo.user.Role;
@@ -43,8 +43,8 @@ public class Fake {
         return product;
     }
 
-    public static Item item(User user, Product product) {
-        var item = new Item();
+    public static CartItem item(User user, Product product) {
+        var item = new CartItem();
         item.setUser(user);
         item.setProduct(product);
         item.setQuantity(9);

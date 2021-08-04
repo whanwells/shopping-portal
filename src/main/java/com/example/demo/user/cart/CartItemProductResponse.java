@@ -6,13 +6,13 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class ItemProductResponse {
+class CartItemProductResponse {
 
     private final Long id;
     private final String name;
     private final Double msrp;
 
-    public static ItemProductResponse from(Product product) {
-        return new ItemProductResponse(product.getId(), product.getName(), product.getMsrp());
+    public static CartItemProductResponse from(Product product) {
+        return new CartItemProductResponse(product.getId(), product.getName(), product.getMsrp());
     }
 }

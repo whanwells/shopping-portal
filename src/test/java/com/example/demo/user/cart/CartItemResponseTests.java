@@ -13,30 +13,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ItemResponseTests {
+class CartItemResponseTests {
 
     @Mock
-    private Item item;
+    private CartItem cartItem;
 
     @Mock
     private Product product;
 
     @BeforeEach
     void setup() {
-        when(item.getProduct()).thenReturn(product);
-        when(item.getQuantity()).thenReturn(9);
+        when(cartItem.getProduct()).thenReturn(product);
+        when(cartItem.getQuantity()).thenReturn(9);
     }
 
     @Test
     void fromItem() {
-        var response = ItemResponse.from(item);
-        assertThat(response.getProduct()).isInstanceOf(ItemProductResponse.class);
+        var response = CartItemResponse.from(cartItem);
+        assertThat(response.getProduct()).isInstanceOf(CartItemProductResponse.class);
         assertThat(response.getQuantity()).isEqualTo(9);
     }
 
     @Test
     void fromItemList() {
-        var response = ItemResponse.from(List.of(item));
+        var response = CartItemResponse.from(List.of(cartItem));
         assertThat(response).isNotEmpty();
     }
 }

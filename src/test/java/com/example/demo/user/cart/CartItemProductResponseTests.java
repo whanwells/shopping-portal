@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ItemProductResponseTests {
+class CartItemProductResponseTests {
 
     @Mock
     private Product product;
@@ -20,7 +20,7 @@ class ItemProductResponseTests {
         when(product.getId()).thenReturn(1L);
         when(product.getName()).thenReturn("foo");
         when(product.getMsrp()).thenReturn(9.99);
-        var response = ItemProductResponse.from(product);
+        var response = CartItemProductResponse.from(product);
 
         assertThat(response.getId()).isEqualTo(1L);
         assertThat(response.getName()).isEqualTo("foo");
