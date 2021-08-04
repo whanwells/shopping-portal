@@ -13,7 +13,7 @@ export const ProtectedRoute: VFC<ProtectedRouteProps> = ({
 }) => {
   const { token } = useToken();
 
-  if (token == null) {
+  if (!token) {
     return <Redirect to="/login" />;
   }
 
