@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { VFC } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
@@ -18,8 +19,11 @@ export const LoginForm: VFC = () => {
   } = useForm<LoginFormInputs>();
 
   const { setToken } = useToken();
+  const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
+    setLoading(true);
+
     const response = await fetch("/api/login", {
       method: "POST",
       body: new URLSearchParams(data),
@@ -31,6 +35,8 @@ export const LoginForm: VFC = () => {
     } else {
       console.log('access denied');
     }
+
+    setLoading(false);
   };
 
   return (
@@ -61,7 +67,7 @@ export const LoginForm: VFC = () => {
           </Form.Control.Feedback>
         </Form.Group>
         <div className="d-flex justify-content-center">
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" disabled={loading}>
             Sign In
           </Button>
         </div>
