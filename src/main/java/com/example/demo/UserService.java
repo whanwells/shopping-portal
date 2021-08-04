@@ -15,5 +15,5 @@ public interface UserService {
 
     boolean existsById(long id);
 
-    User save(User user);
+    Long save(User user);
 }

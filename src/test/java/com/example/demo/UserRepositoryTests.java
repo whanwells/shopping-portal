@@ -21,7 +21,7 @@ class UserRepositoryTests {
 
     @BeforeEach
     void setup() {
-        id = entityManager.persistAndGetId(new User("foo@example.com", "bar"), Long.class);
+        id = entityManager.persistAndGetId(Fake.user(), Long.class);
     }
 
     @Test

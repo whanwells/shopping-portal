@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.registration;
 
+import com.example.demo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,7 +11,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,30 +27,26 @@ public class RegistrationController {
             throw new BadRequestException("A user with that email already exists");
         }
 
-        var user = userService.save(createUser(request));
-
-        return ResponseEntity
-            .created(createLocation(user))
-            .body(RegistrationResponse.from(user));
-    }
-
-    private User createUser(RegistrationRequest request) {
-        var user = new User(request.getEmail(), passwordEncoder.encode(request.getPassword()));
-        user.addRole(getUserRole());
-        return user;
-    }
-
-    private Role getUserRole() {
-        return roleService.findByName("ROLE_USER")
+        // All users get ROLE_USER as a base
+        var role = roleService.findByName("ROLE_USER")
             .orElseThrow(() -> new InternalServerException("Unable to assign ROLE_USER"));
-    }
 
-    private static URI createLocation(User user) {
-        return ServletUriComponentsBuilder
-            .fromCurrentRequest()
-            .path("/../users/{id}")
-            .buildAndExpand(user.getId())
+        // Create the new user
+        var user = new User();
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.addRole(role);
+
+        var userId = userService.save(user);
+
+        var location = ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/../users/{userId}")
+            .buildAndExpand(userId)
             .normalize()
             .toUri();
+
+        return ResponseEntity
+            .created(location)
+            .body(new RegistrationResponse(userId, user.getEmail()));
     }
 }

@@ -27,7 +27,7 @@ class OrderRepositoryTests {
 
     @BeforeEach
     void setup() {
-        var user = new User("foo@example.com", "bar");
+        var user = Fake.user();
         userId = entityManager.persistAndGetId(user, Long.class);
 
         order = Order.from(user);

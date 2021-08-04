@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.registration;
 
+import com.example.demo.registration.RegistrationRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

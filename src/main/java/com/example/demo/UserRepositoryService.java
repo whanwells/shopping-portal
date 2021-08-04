@@ -38,7 +38,7 @@ public class UserRepositoryService implements UserService {
     }
 
     @Override
-    public User save(User user) {
-        return repository.save(user);
+    public Long save(User user) {
+        return repository.save(user).getId();
     }
 }

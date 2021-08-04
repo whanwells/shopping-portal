@@ -57,6 +57,7 @@ class UserRepositoryServiceTests {
     @Test
     void save() {
         when(repository.save(user)).thenReturn(user);
-        assertThat(service.save(user)).isEqualTo(user);
+        when(user.getId()).thenReturn(1L);
+        assertThat(service.save(user)).isEqualTo(user.getId());
     }
 }

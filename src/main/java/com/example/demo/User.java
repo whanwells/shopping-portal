@@ -32,13 +32,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private final List<Order> orders = new ArrayList<>();
 
-    public User() {}
-
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
     public void addRole(Role role) {
         roles.add(role);
         role.getUsers().add(this);

@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.registration;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

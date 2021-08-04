@@ -11,7 +11,10 @@ public class Fake {
     private Fake() {}
 
     public static User user() {
-        return new User("foo@exampe.com", "bar");
+        var user = new User();
+        user.setEmail("foo@example.com");
+        user.setPassword("foo");
+        return user;
     }
 
     public static Category category() {

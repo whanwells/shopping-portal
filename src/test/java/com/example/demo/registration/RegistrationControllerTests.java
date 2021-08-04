@@ -1,7 +1,10 @@
-package com.example.demo;
+package com.example.demo.registration;
 
-import org.junit.jupiter.api.BeforeEach;
+import com.example.demo.*;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,6 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(RegistrationController.class)
+@ExtendWith(MockitoExtension.class)
 public class RegistrationControllerTests extends BaseControllerTest {
 
     @Autowired
@@ -28,28 +32,13 @@ public class RegistrationControllerTests extends BaseControllerTest {
     @MockBean
     private RoleService roleService;
 
-    private final User user = new User();
-
-    private final Role role = new Role();
-
-    @BeforeEach
-    void setupUser() {
-        user.setId(1L);
-        user.setEmail("foo@example.com");
-        user.setPassword("bar");
-        user.addRole(role);
-    }
-
-    @BeforeEach
-    void setupRole() {
-        role.setId(1L);
-        role.setName("ROLE_USER");
-    }
+    @Mock
+    private Role role;
 
     @Test
     void register() throws Exception {
         when(roleService.findByName("ROLE_USER")).thenReturn(Optional.of(role));
-        when(userService.save(any(User.class))).thenReturn(user);
+        when(userService.save(any(User.class))).thenReturn(1L);
 
         mockMvc.perform(
             post("/api/register")
@@ -84,8 +73,7 @@ public class RegistrationControllerTests extends BaseControllerTest {
 
     @Test
     void registerWhenRoleNotFound() throws Exception {
-        when(roleService.findByName("ROLE_USER"))
-            .thenReturn(Optional.empty());
+        when(roleService.findByName("ROLE_USER")).thenReturn(Optional.empty());
 
         mockMvc.perform(
             post("/api/register")
