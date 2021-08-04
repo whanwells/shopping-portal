@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.security.CustomUserDetailsService;
+import com.example.demo.security.TokenManager;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 // Controller tests should extend this class, which will inject all necessary
