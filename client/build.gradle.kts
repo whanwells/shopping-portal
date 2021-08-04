@@ -1,3 +1,4 @@
+import com.github.gradle.node.task.NodeTask;
 import com.github.gradle.node.npm.task.NpmTask;
 
 plugins {
@@ -42,6 +43,13 @@ val prettier = task<NpmTask>("prettier") {
     description = "Runs Prettier."
     dependsOn(tasks.npmInstall)
     args.set(listOf("run", "prettier"))
+}
+
+val parallelRun = task<NodeTask>("parallelRun") {
+    group = "application"
+    description = "Runs React and Spring in parallel."
+    dependsOn(tasks.npmInstall)
+    script.set(file("server.js"))
 }
 
 tasks.assemble {
