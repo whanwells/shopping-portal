@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +19,8 @@ class OrderResponseTests {
     @Mock
     private Order order;
 
-    @Mock User user;
+    @Mock
+    User user;
 
     private final LocalDateTime date = LocalDateTime.now();
 

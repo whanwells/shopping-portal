@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.user;
 
+import com.example.demo.Fake;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -18,9 +19,7 @@ class RoleRepositoryTests {
 
     @Test
     void findByName() {
-        var role = new Role();
-        role.setName("foo");
-        entityManager.persist(role);
-        assertThat(repository.findByName("foo")).isPresent();
+        var role = entityManager.persist(Fake.role());
+        assertThat(repository.findByName(role.getName())).isPresent();
     }
 }

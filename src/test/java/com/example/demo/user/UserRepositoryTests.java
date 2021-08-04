@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.user;
 
+import com.example.demo.Fake;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,11 @@ class UserRepositoryTests {
     @Autowired
     private TestEntityManager entityManager;
 
-    private long id;
+    private User user;
 
     @BeforeEach
     void setup() {
-        id = entityManager.persistAndGetId(Fake.user(), Long.class);
+        user = entityManager.persist(Fake.user());
     }
 
     @Test
@@ -36,6 +37,6 @@ class UserRepositoryTests {
 
     @Test
     void existsById() {
-        assertThat(repository.existsById(id)).isTrue();
+        assertThat(repository.existsById(user.getId())).isTrue();
     }
 }

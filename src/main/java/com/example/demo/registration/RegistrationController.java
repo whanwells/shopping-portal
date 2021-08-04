@@ -1,6 +1,9 @@
 package com.example.demo.registration;
 
 import com.example.demo.*;
+import com.example.demo.user.RoleService;
+import com.example.demo.user.User;
+import com.example.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;

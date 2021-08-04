@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.user;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,10 +13,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserRepositoryServiceTests {
+class UserServiceTests {
 
     @InjectMocks
-    private UserRepositoryService service;
+    private UserService service;
 
     @Mock
     private UserRepository repository;

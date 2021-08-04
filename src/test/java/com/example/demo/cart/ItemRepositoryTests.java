@@ -2,7 +2,7 @@ package com.example.demo.cart;
 
 import com.example.demo.Fake;
 import com.example.demo.product.Product;
-import com.example.demo.User;
+import com.example.demo.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

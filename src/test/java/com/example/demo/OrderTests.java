@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.user.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

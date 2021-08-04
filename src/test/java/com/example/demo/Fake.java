@@ -3,12 +3,20 @@ package com.example.demo;
 import com.example.demo.cart.Item;
 import com.example.demo.product.Category;
 import com.example.demo.product.Product;
+import com.example.demo.user.Role;
+import com.example.demo.user.User;
 
 import java.time.LocalDate;
 
 public class Fake {
 
     private Fake() {}
+
+    public static Role role() {
+        var role = new Role();
+        role.setName("foo");
+        return role;
+    }
 
     public static User user() {
         var user = new User();

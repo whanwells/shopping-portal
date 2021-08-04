@@ -1,9 +1,12 @@
-package com.example.demo;
+package com.example.demo.user;
 
-import org.junit.jupiter.api.BeforeEach;
+import com.example.demo.BaseControllerTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,6 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
+@ExtendWith(MockitoExtension.class)
 class UserControllerTests extends BaseControllerTest {
 
     @Autowired
@@ -27,29 +31,15 @@ class UserControllerTests extends BaseControllerTest {
     @MockBean
     private UserService service;
 
-    private final User user = new User();
+    @Mock
+    private User user;
 
-    @BeforeEach
-    void setup() {
-        var role = new Role();
-        role.setId(2L);
-        role.setName("bar");
-
-        user.setId(1L);
-        user.setEmail("foo@example.com");
-        user.addRole(role);
-    }
+    @Mock
+    private Role role;
 
     @ParameterizedTest
     @ValueSource(strings = {"/api/users", "/api/users/1"})
     void whenUnauthenticated(String path) throws Exception {
-        mockMvc.perform(get(path)).andExpect(status().isForbidden());
-    }
-
-    @ParameterizedTest
-    @WithMockUser
-    @ValueSource(strings = {"/api/users", "/api/users/1"})
-    void whenUnauthorized(String path) throws Exception {
         mockMvc.perform(get(path)).andExpect(status().isForbidden());
     }
 
@@ -60,32 +50,37 @@ class UserControllerTests extends BaseControllerTest {
 
         mockMvc.perform(get("/api/users"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.size()").value(1))
-            .andExpect(jsonPath("$[0].id").value(1))
-            .andExpect(jsonPath("$[0].email").value("foo@example.com"))
-            .andExpect(jsonPath("$[0].roles.size()").value(1))
-            .andExpect(jsonPath("$[0].roles[0].id").value(2))
-            .andExpect(jsonPath("$[0].roles[0].name").value("bar"));
+            .andExpect(jsonPath("$.size()").value(1));
     }
 
     @Test
-    @WithMockUser(roles = {"ADMIN"})
-    void getById() throws Exception {
+    @WithMockUser
+    void getAllWhenNotAdmin() throws Exception {
+        mockMvc.perform(get("/api/users")).andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(username = "1")
+    void getOne() throws Exception {
         when(service.findById(1L)).thenReturn(Optional.of(user));
+        when(user.getId()).thenReturn(1L);
+        when(user.getEmail()).thenReturn("foo@example.com");
+        when(user.getRoles()).thenReturn(List.of(role));
+        when(role.getId()).thenReturn(1L);
+        when(role.getName()).thenReturn("foo");
 
         mockMvc.perform(get("/api/users/1"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id").value(1))
             .andExpect(jsonPath("$.email").value("foo@example.com"))
             .andExpect(jsonPath("$.roles.size()").value(1))
-            .andExpect(jsonPath("$.roles[0].id").value(2))
-            .andExpect(jsonPath("$.roles[0].name").value("bar"));
+            .andExpect(jsonPath("$.roles[0].id").value(1))
+            .andExpect(jsonPath("$.roles[0].name").value("foo"));
     }
 
     @Test
-    @WithMockUser(roles = {"ADMIN"})
-    void getByIdWithInvalidId() throws Exception {
-        when(service.findById(1L)).thenReturn(Optional.empty());
-        mockMvc.perform(get("/api/users/1")).andExpect(status().isNotFound());
+    @WithMockUser(username = "2")
+    void getOneButPrincipalMismatch() throws Exception {
+        mockMvc.perform(get("/api/users/1")).andExpect(status().isForbidden());
     }
 }

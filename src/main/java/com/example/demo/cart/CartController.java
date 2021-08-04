@@ -2,6 +2,8 @@ package com.example.demo.cart;
 
 import com.example.demo.*;
 import com.example.demo.product.ProductService;
+import com.example.demo.user.User;
+import com.example.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

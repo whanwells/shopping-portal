@@ -1,6 +1,10 @@
 package com.example.demo.registration;
 
 import com.example.demo.*;
+import com.example.demo.user.Role;
+import com.example.demo.user.RoleService;
+import com.example.demo.user.User;
+import com.example.demo.user.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
