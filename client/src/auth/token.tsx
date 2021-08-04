@@ -5,7 +5,7 @@ const TOKEN_STORAGE_KEY = "token";
 
 type TokenContextType = {
   token: string | null;
-  setToken: (value: string) => void;
+  setToken: (value: string | null) => void;
 };
 
 const TokenContext = createContext<TokenContextType>({
@@ -22,8 +22,8 @@ export const TokenProvider: VFC<TokenProviderProps> = ({ children }) => {
     localStorage.getItem(TOKEN_STORAGE_KEY)
   );
 
-  const setToken = (value: string) => {
-    localStorage.setItem(TOKEN_STORAGE_KEY, value);
+  const setToken = (value: string | null) => {
+    localStorage.setItem(TOKEN_STORAGE_KEY, value ?? '');
     setTokenState(value);
   };
 
