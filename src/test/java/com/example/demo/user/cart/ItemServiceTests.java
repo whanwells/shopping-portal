@@ -46,7 +46,8 @@ class ItemServiceTests {
     @Test
     void save() {
         when(repository.save(item)).thenReturn(item);
-        assertThat(service.save(item)).isEqualTo(item);
+        when(item.getId()).thenReturn(1L);
+        assertThat(service.save(item)).isEqualTo(item.getId());
     }
 
     @Test

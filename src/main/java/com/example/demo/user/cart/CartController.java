@@ -69,7 +69,8 @@ public class CartController {
             });
 
         item.setQuantity(request.getQuantity());
-        return ItemResponse.from(itemService.save(item));
+        itemService.save(item);
+        return ItemResponse.from(item);
     }
 
     @DeleteMapping
