@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.cart.Item;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,9 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable
     private final List<Role> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Item> items = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private final List<Order> orders = new ArrayList<>();

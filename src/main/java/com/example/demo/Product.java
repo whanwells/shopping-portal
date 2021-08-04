@@ -35,6 +35,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private final List<OrderLine> orderLines = new ArrayList<>();
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private final List<OrderLine> cartItems = new ArrayList<>();
+
     public boolean isStocked() {
         return quantity > 0;
     }
