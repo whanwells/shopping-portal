@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.product;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,11 +10,14 @@ import java.util.stream.Collectors;
 @Getter
 public class CategoryResponse {
 
-    private final long id;
-    private final String name;
+    private final String category;
+    private final List<ProductResponse> products;
 
     public static CategoryResponse from(Category category) {
-        return new CategoryResponse(category.getId(), category.getName());
+        return new CategoryResponse(
+            category.getName(),
+            ProductResponse.from(category.getProducts())
+        );
     }
 
     public static List<CategoryResponse> from(List<Category> categories) {

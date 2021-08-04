@@ -1,24 +1,21 @@
-package com.example.demo;
+package com.example.demo.product;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryRepositoryService implements CategoryService {
+public class CategoryService {
 
     private final CategoryRepository repository;
 
-    @Override
     public List<Category> findAll() {
         return repository.findAll();
     }
 
-    @Override
-    public Optional<Category> findById(Long id) {
-        return repository.findById(id);
+    public List<Category> findByName(String name) {
+        return repository.findByName(name);
     }
 }

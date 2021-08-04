@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.product.Product;
 import lombok.Getter;
 import lombok.Setter;
 

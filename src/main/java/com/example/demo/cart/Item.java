@@ -1,6 +1,6 @@
 package com.example.demo.cart;
 
-import com.example.demo.Product;
+import com.example.demo.product.Product;
 import com.example.demo.User;
 import lombok.Getter;
 import lombok.Setter;

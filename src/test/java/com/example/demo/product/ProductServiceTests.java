@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.product;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,10 +13,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ProductRepositoryServiceTests {
+class ProductServiceTests {
 
     @InjectMocks
-    private ProductRepositoryService service;
+    private ProductService service;
 
     @Mock
     private ProductRepository repository;

@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.product;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,6 @@ public class ProductResponse {
     private final String name;
     private final LocalDate releaseDate;
     private final double msrp;
-    private final String category;
     private final boolean stocked;
 
     public static ProductResponse from(Product product) {
@@ -23,7 +22,6 @@ public class ProductResponse {
             product.getName(),
             product.getReleaseDate(),
             product.getMsrp(),
-            product.getCategory().getName(),
             product.isStocked()
         );
     }

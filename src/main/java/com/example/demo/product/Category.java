@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.product;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,16 +18,6 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Product> products = new ArrayList<>();
-
-    public void addProduct(Product product) {
-        products.add(product);
-        product.setCategory(this);
-    }
-
-    public void removeProduct(Product product) {
-        products.remove(product);
-        product.setCategory(null);
-    }
 }

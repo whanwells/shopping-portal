@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.product.ProductResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.product.Category;
+import com.example.demo.product.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

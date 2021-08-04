@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.product;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,16 +7,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CategoryRepositoryServiceTests {
+class CategoryServiceTests {
 
     @InjectMocks
-    private CategoryRepositoryService service;
+    private CategoryService service;
 
     @Mock
     private CategoryRepository repository;
@@ -27,12 +26,12 @@ class CategoryRepositoryServiceTests {
     @Test
     void findAll() {
         when(repository.findAll()).thenReturn(List.of(category));
-        assertThat(service.findAll()).hasSize(1);
+        assertThat(service.findAll()).isNotEmpty();
     }
 
     @Test
-    void findById() {
-        when(repository.findById(1L)).thenReturn(Optional.of(category));
-        assertThat(service.findById(1L)).isPresent();
+    void findByName() {
+        when(repository.findByName("foo")).thenReturn(List.of(category));
+        assertThat(service.findByName("foo")).isNotEmpty();
     }
 }

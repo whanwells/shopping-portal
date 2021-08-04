@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.product;
 
+import com.example.demo.OrderLine;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class Product {
 
     @Id
@@ -34,9 +36,6 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private final List<OrderLine> orderLines = new ArrayList<>();
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private final List<OrderLine> cartItems = new ArrayList<>();
 
     public boolean isStocked() {
         return quantity > 0;

@@ -1,6 +1,6 @@
 package com.example.demo.cart;
 
-import com.example.demo.Product;
+import com.example.demo.product.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
