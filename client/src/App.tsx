@@ -1,8 +1,12 @@
 import { Nav } from "./components";
+import { LoginForm } from "./login";
 
 const App = () => {
   return (
-    <Nav />
+    <>
+      <Nav />
+      <LoginForm />
+    </>
   );
 };
 
