@@ -1,6 +1,7 @@
 package com.example.demo.registration;
 
-import com.example.demo.*;
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.InternalServerException;
 import com.example.demo.user.RoleService;
 import com.example.demo.user.User;
 import com.example.demo.user.UserService;

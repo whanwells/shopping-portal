@@ -1,6 +1,6 @@
 package com.example.demo.product;
 
-import com.example.demo.ResourceNotFoundException;
+import com.example.demo.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

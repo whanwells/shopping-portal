@@ -1,7 +1,7 @@
 package com.example.demo.user;
 
-import com.example.demo.ForbiddenException;
-import com.example.demo.ResourceNotFoundException;
+import com.example.demo.exception.ForbiddenException;
+import com.example.demo.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;

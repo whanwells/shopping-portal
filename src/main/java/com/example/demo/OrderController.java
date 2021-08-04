@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ForbiddenException;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.product.ProductService;
 import com.example.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
