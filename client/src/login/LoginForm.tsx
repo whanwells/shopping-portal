@@ -2,6 +2,7 @@ import type { VFC } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
+import { useToken } from "../auth";
 import { LoginCard } from "./LoginCard";
 
 type LoginFormInputs = {
@@ -16,8 +17,20 @@ export const LoginForm: VFC = () => {
     handleSubmit,
   } = useForm<LoginFormInputs>();
 
-  const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
-    console.log(data);
+  const { setToken } = useToken();
+
+  const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
+    const response = await fetch("/api/login", {
+      method: "POST",
+      body: new URLSearchParams(data),
+    });
+
+    if (response.ok) {
+      const { token } = await response.json();
+      setToken(token);
+    } else {
+      console.log('access denied');
+    }
   };
 
   return (
