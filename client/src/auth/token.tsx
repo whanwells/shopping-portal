@@ -23,7 +23,7 @@ export const TokenProvider: VFC<TokenProviderProps> = ({ children }) => {
   );
 
   const setToken = (value: string | null) => {
-    localStorage.setItem(TOKEN_STORAGE_KEY, value ?? '');
+    localStorage.setItem(TOKEN_STORAGE_KEY, value ?? "");
     setTokenState(value);
   };
 
