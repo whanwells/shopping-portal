@@ -4,8 +4,8 @@ import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import { Redirect } from "react-router";
-import { useToken } from "../auth";
 import { request } from "../request";
+import { useToken } from "../token";
 import { LoginCard } from "./LoginCard";
 
 type LoginFormInputs = {

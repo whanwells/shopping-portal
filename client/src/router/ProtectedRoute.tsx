@@ -1,6 +1,6 @@
 import type { VFC, ReactNode } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { useToken } from "./token";
+import { useToken } from "../token";
 
 type ProtectedRouteProps = {
   path: string;

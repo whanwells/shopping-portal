@@ -1,5 +1,5 @@
 import { Navbar, Nav } from "react-bootstrap";
-import { useToken } from "../auth";
+import { useToken } from "../token";
 
 export const Navigation = () => {
   const { token, setToken } = useToken();

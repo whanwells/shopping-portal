@@ -1,6 +1,5 @@
 import { Switch, Route } from "react-router-dom";
-import { ProtectedRoute } from "./auth";
-import { Navigation } from "./components";
+import { Navigation, ProtectedRoute } from "./router";
 import { LoginForm } from "./login";
 
 const App = () => {
@@ -11,9 +10,7 @@ const App = () => {
         <Route path="/login">
           <LoginForm />
         </Route>
-        <ProtectedRoute path="/">
-          {null}
-        </ProtectedRoute>
+        <ProtectedRoute path="/">{null}</ProtectedRoute>
       </Switch>
     </>
   );
