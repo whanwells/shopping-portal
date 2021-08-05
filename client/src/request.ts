@@ -1,5 +1,5 @@
 interface RequestOptions extends RequestInit {
-  token?: string;
+  token?: string | null;
 }
 
 class RequestError extends Error {
@@ -16,7 +16,7 @@ export const request = async (path: string, options: RequestOptions = {}) => {
   const { token, ...config } = options;
   const headers: HeadersInit = {};
 
-  if (token !== undefined) {
+  if (token !== undefined && token !== null) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
