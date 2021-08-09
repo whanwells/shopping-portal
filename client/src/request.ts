@@ -20,7 +20,13 @@ export const request = async (path: string, options: RequestOptions = {}) => {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const response = await fetch(path, config);
+  const response = await fetch(path, {
+    ...config,
+    headers: {
+      ...config.headers,
+      ...headers,
+    },
+  });
 
   if (!response.ok) {
     const message = await response.text();
