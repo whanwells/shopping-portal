@@ -4,11 +4,13 @@ import { useToken } from "../token";
 
 type ProtectedRouteProps = {
   path: string;
+  exact?: boolean;
   children: ReactNode;
 };
 
 export const ProtectedRoute: VFC<ProtectedRouteProps> = ({
   path,
+  exact,
   children,
 }) => {
   const { token } = useToken();
@@ -17,5 +19,9 @@ export const ProtectedRoute: VFC<ProtectedRouteProps> = ({
     return <Redirect to="/login" />;
   }
 
-  return <Route path={path}>{children}</Route>;
+  return (
+    <Route path={path} exact={exact}>
+      {children}
+    </Route>
+  );
 };
