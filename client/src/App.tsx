@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Switch, Route } from "react-router-dom";
 import { Navigation, ProtectedRoute } from "./router";
 import { LoginForm } from "./login";
+import { CategorySelection } from "./product";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,7 +20,9 @@ const App = () => {
         <Route path="/login">
           <LoginForm />
         </Route>
-        <ProtectedRoute path="/">{null}</ProtectedRoute>
+        <ProtectedRoute path="/" exact>
+          <CategorySelection />
+        </ProtectedRoute>
       </Switch>
     </QueryClientProvider>
   );
