@@ -13,7 +13,7 @@ export const Navigation = () => {
       <Navbar.Brand href="#">Shopping Portal</Navbar.Brand>
       {token && (
         <Nav>
-          <Nav.Link href="/">Home</Nav.Link>
+          <Nav.Link href="/">Products</Nav.Link>
           <Nav.Link href="#" onClick={handleLogout}>
             Logout
           </Nav.Link>
