@@ -1,5 +1,6 @@
 interface RequestOptions extends RequestInit {
   token?: string | null;
+  json?: boolean;
 }
 
 class RequestError extends Error {
@@ -13,11 +14,15 @@ class RequestError extends Error {
 }
 
 export const request = async (path: string, options: RequestOptions = {}) => {
-  const { token, ...config } = options;
+  const { token, json, ...config } = options;
   const headers: HeadersInit = {};
 
   if (token !== undefined && token !== null) {
     headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  if (json) {
+    headers["Content-Type"] = "application/json";
   }
 
   const response = await fetch(path, {
@@ -43,6 +48,12 @@ request.get = (path: string, options: RequestOptions = {}) => {
 
 request.post = (path: string, body: BodyInit, options: RequestOptions = {}) => {
   options.method = "POST";
+  options.body = body;
+  return request(path, options);
+};
+
+request.put = (path: string, body: BodyInit, options: RequestOptions = {}) => {
+  options.method = "PUT";
   options.body = body;
   return request(path, options);
 };
