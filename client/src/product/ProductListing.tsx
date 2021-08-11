@@ -12,6 +12,10 @@ type ProductRouteParams = {
   category: string;
 };
 
+function titleCase(str: string) {
+  return str[0].toUpperCase() + str.substr(1);
+}
+
 export const ProductListing: VFC = () => {
   const { token } = useToken();
   const { category } = useParams<ProductRouteParams>();
@@ -29,7 +33,7 @@ export const ProductListing: VFC = () => {
 
   return (
     <Container>
-      <h1 className="h4 mb-3">{category}</h1>
+      <h1 className="h4 mb-3">{titleCase(category)}</h1>
       {data[0].products.map(({ id, name, msrp, stocked }: Product) => (
         <Row key={id} className="mb-4 border-bottom">
           <Col>
