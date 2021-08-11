@@ -5,17 +5,11 @@ import { useQuery } from "react-query";
 import { Spinner } from "../components";
 import { request } from "../request";
 import { useToken } from "../token";
+import type { Product } from "../types";
 import { ProductButton } from "./ProductButton";
 
 type ProductRouteParams = {
   category: string;
-};
-
-type Product = {
-  id: number;
-  name: string;
-  msrp: number;
-  stocked: boolean;
 };
 
 export const ProductListing: VFC = () => {
