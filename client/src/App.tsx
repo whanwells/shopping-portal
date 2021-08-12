@@ -20,24 +20,12 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <Navigation />
       <Switch>
-        <Route path="/login">
-          <LoginForm />
-        </Route>
-        <ProtectedRoute path="/" exact>
-          <ProductListing />
-        </ProtectedRoute>
-        <ProtectedRoute path="/cart">
-          <Cart />
-        </ProtectedRoute>
-        <ProtectedRoute path="/orders/:orderId">
-          <OrderDetail />
-        </ProtectedRoute>
-        <ProtectedRoute path="/orders">
-          <OrderList />
-        </ProtectedRoute>
-        <ProtectedRoute path="/logout">
-          <Logout />
-        </ProtectedRoute>
+        <Route exact path="/login" component={LoginForm} />
+        <ProtectedRoute exact path="/" component={ProductListing} />
+        <ProtectedRoute exact path="/cart" component={Cart} />
+        <ProtectedRoute exact path="/orders/:orderId" component={OrderDetail} />
+        <ProtectedRoute exact path="/orders" component={OrderList} />
+        <ProtectedRoute exact path="/logout" component={Logout} />
       </Switch>
     </QueryClientProvider>
   );
