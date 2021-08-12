@@ -11,6 +11,12 @@ export type CartItem = {
   product: Omit<Product, "stocked">;
 };
 
+export type Order = {
+  id: number;
+  lines: OrderLine[];
+  total: number;
+};
+
 export type OrderLine = {
   id: number;
   product: Product;
