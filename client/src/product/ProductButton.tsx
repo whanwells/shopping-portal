@@ -1,5 +1,4 @@
 import type { VFC, MouseEvent } from "react";
-import { Button } from "react-bootstrap";
 import { useHistory } from "react-router";
 import { request } from "../request";
 import { useToken } from "../token";
@@ -30,5 +29,5 @@ export const ProductButton: VFC<ProductButtonProps> = ({ id, stocked }) => {
     history.push("/cart");
   }
 
-  return <Button onClick={handleClick}>Add to Cart</Button>;
+  return <button onClick={handleClick}>Add to Cart</button>;
 };

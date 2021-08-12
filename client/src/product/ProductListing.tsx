@@ -1,5 +1,4 @@
 import type { VFC } from "react";
-import { Container, Row, Col } from "react-bootstrap";
 import { useParams } from "react-router";
 import { useQuery } from "react-query";
 import { Spinner } from "../components";
@@ -32,19 +31,19 @@ export const ProductListing: VFC = () => {
   }
 
   return (
-    <Container>
-      <h1 className="h4 mb-3">{titleCase(category)}</h1>
-      {data[0].products.map(({ id, name, msrp, stocked }: Product) => (
-        <Row key={id} className="mb-4 border-bottom">
-          <Col>
-            <h2 className="h6">{name}</h2>
-            <p>${msrp}</p>
-          </Col>
-          <Col>
-            <ProductButton id={id} stocked={stocked} />
-          </Col>
-        </Row>
-      ))}
-    </Container>
+    <>
+      <h1>{titleCase(category)}</h1>
+      <ul>
+        {data[0].products.map(({ id, name, msrp, stocked }: Product) => (
+          <li key={id}>
+            <div>{name}</div>
+            <div>${msrp}</div>
+            <div>
+              <ProductButton id={id} stocked={stocked} />
+            </div>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };

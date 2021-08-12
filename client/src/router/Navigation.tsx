@@ -1,4 +1,4 @@
-import { Navbar, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { useToken } from "../token";
 
 export const Navigation = () => {
@@ -9,17 +9,23 @@ export const Navigation = () => {
   }
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" sticky="top" className="mb-4">
-      <Navbar.Brand href="#">Shopping Portal</Navbar.Brand>
+    <nav>
+      <div>Shopping Portal</div>
       {token && (
-        <Nav>
-          <Nav.Link href="/">Products</Nav.Link>
-          <Nav.Link href="/cart">Cart</Nav.Link>
-          <Nav.Link href="#" onClick={handleLogout}>
-            Logout
-          </Nav.Link>
-        </Nav>
+        <ul>
+          <li>
+            <Link to="/">Products</Link>
+          </li>
+          <li>
+            <Link to="/cart">Cart</Link>
+          </li>
+          <li>
+            <a href="#" onClick={handleLogout}>
+              Logout
+            </a>
+          </li>
+        </ul>
       )}
-    </Navbar>
+    </nav>
   );
 };
