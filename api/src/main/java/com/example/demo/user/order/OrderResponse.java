@@ -14,13 +14,15 @@ public class OrderResponse {
     private final OrderUserResponse user;
     private final LocalDateTime date;
     private final List<OrderLineResponse> products;
+    private final double total;
 
     public static OrderResponse from(Order order) {
         return new OrderResponse(
             order.getId(),
             OrderUserResponse.from(order.getUser()),
             order.getDate(),
-            OrderLineResponse.from(order.getOrderLines())
+            OrderLineResponse.from(order.getOrderLines()),
+            order.getTotal()
         );
     }
 

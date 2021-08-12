@@ -11,7 +11,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "order_t")
-@Getter @Setter
+@Getter
+@Setter
 public class Order {
 
     @Id
@@ -36,5 +37,15 @@ public class Order {
     public void removeLine(OrderLine orderLine) {
         orderLines.remove(orderLine);
         orderLine.setOrder(null);
+    }
+
+    public double getTotal() {
+        double total = 0.0;
+
+        for (var line: orderLines) {
+            total += line.getProduct().getMsrp();
+        }
+
+        return total;
     }
 }
