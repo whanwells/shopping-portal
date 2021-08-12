@@ -52,8 +52,7 @@ request.post = (path: string, body: BodyInit, options: RequestOptions = {}) => {
   return request(path, options);
 };
 
-request.put = (path: string, body: BodyInit, options: RequestOptions = {}) => {
-  options.method = "PUT";
-  options.body = body;
+request.delete = (path: string, options: RequestOptions = {}) => {
+  options.method = "DELETE";
   return request(path, options);
 };

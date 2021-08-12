@@ -5,6 +5,7 @@ import { request } from "../request";
 import { useToken } from "../token";
 import type { CartItem } from "../types";
 import { CheckoutButton } from "./CheckoutButton";
+import { Item } from "./Item";
 import { ShopButton } from "./ShopButton";
 
 export const Cart: VFC = () => {
@@ -36,9 +37,7 @@ export const Cart: VFC = () => {
       <ul>
         {data.map(({ id, product }: CartItem) => (
           <li key={id}>
-            <div>{product.name}</div>
-            <div>${product.msrp}</div>
-            <div>Delete</div>
+            <Item id={id} product={product} />
           </li>
         ))}
       </ul>
