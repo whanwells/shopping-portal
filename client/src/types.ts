@@ -10,3 +10,8 @@ export type CartItem = {
   id: number;
   product: Omit<Product, "stocked">;
 };
+
+export type OrderLine = {
+  id: number;
+  product: Product;
+};
