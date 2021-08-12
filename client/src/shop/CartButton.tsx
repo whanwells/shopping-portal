@@ -1,4 +1,5 @@
 import type { VFC, MouseEvent } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router";
 import { request } from "../request";
 import { useToken } from "../token";
@@ -8,18 +9,22 @@ type CartButtonProps = {
 };
 
 export const CartButton: VFC<CartButtonProps> = ({ productId }) => {
-  const { token, sub } = useToken();
   const history = useHistory();
+  const queryClient = useQueryClient();
+  const { token, sub } = useToken();
 
-  async function handleClick(event: MouseEvent<HTMLButtonElement>) {
-    event.preventDefault();
-
+  const mutation = useMutation(async () => {
     await request.post(`/api/users/${sub}/cart`, {
       token,
       json: { productId },
     });
-
+    queryClient.invalidateQueries(["cart", sub]);
     history.push("/cart");
+  });
+
+  function handleClick(event: MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    mutation.mutate();
   }
 
   return <button onClick={handleClick}>Add to Cart</button>;
