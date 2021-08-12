@@ -1,10 +1,10 @@
 import type { VFC } from "react";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
 import { Spinner } from "../components";
 import { request } from "../request";
 import { useToken } from "../token";
-import { Order } from "../types";
+import { EmptyOrderList } from "./EmptyOrderList";
+import { PopulatedOrderList } from "./PopulatedOrderList";
 
 export const OrderList: VFC = () => {
   const { token, sub } = useToken();
@@ -26,16 +26,8 @@ export const OrderList: VFC = () => {
 
   return (
     <>
-      <h1>Orders</h1>
-      <div>
-        <ul>
-          {data.map(({ id }: Order) => (
-            <li key={id}>
-              <Link to={`/orders/${id}`}>Order #{id}</Link>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <h1 className="h5 mb-3">Orders</h1>
+      {data.length ? <PopulatedOrderList orders={data} /> : <EmptyOrderList />}
     </>
   );
 };
