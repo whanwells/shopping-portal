@@ -9,7 +9,7 @@ export const CategorySelection: VFC = () => (
     <ul>
       {categories.map((category) => (
         <li key={category}>
-          <Link to={`/products/${category.toLowerCase()}`}>{category}</Link>
+          <Link to={`/shop/${category.toLowerCase()}`}>{category}</Link>
         </li>
       ))}
     </ul>

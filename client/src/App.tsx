@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import { Cart } from "./cart";
 import { Navigation, ProtectedRoute } from "./router";
 import { LoginForm, Logout } from "./session";
-import { CategorySelection, ProductListing } from "./product";
+import { CategorySelection, ProductListing } from "./shop";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,7 +24,7 @@ const App = () => {
         <ProtectedRoute path="/" exact>
           <CategorySelection />
         </ProtectedRoute>
-        <ProtectedRoute path="/products/:category">
+        <ProtectedRoute path="/shop/:category">
           <ProductListing />
         </ProtectedRoute>
         <ProtectedRoute path="/cart">
