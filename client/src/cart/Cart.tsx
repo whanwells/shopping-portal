@@ -27,7 +27,7 @@ export const Cart: VFC = () => {
   }
 
   const total: number = data.reduce(
-    (total: number, item: CartItem) => total + item.product.msrp,
+    (total: number, { product }: CartItem) => total + product.msrp,
     0
   );
 
@@ -41,7 +41,13 @@ export const Cart: VFC = () => {
           </li>
         ))}
       </ul>
-      <div>Total ${total}</div>
+      <div>
+        Total $
+        {total.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}
+      </div>
       <div>
         <ShopButton />
         <CheckoutButton />
