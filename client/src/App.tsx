@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Switch, Route } from "react-router-dom";
+import { Cart } from "./cart";
 import { Navigation, ProtectedRoute } from "./router";
 import { LoginForm } from "./login";
 import { CategorySelection, ProductListing } from "./product";
@@ -25,6 +26,9 @@ const App = () => {
         </ProtectedRoute>
         <ProtectedRoute path="/products/:category">
           <ProductListing />
+        </ProtectedRoute>
+        <ProtectedRoute path="/cart">
+          <Cart />
         </ProtectedRoute>
       </Switch>
     </QueryClientProvider>

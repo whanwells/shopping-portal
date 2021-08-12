@@ -14,6 +14,7 @@ export const Navigation = () => {
       {token && (
         <Nav>
           <Nav.Link href="/">Products</Nav.Link>
+          <Nav.Link href="/cart">Cart</Nav.Link>
           <Nav.Link href="#" onClick={handleLogout}>
             Logout
           </Nav.Link>

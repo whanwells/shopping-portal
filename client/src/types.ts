@@ -4,3 +4,8 @@ export type Product = {
   msrp: number;
   stocked: boolean;
 };
+
+export type CartItem = {
+  product: Omit<Product, "stocked">;
+  quantity: number;
+};
