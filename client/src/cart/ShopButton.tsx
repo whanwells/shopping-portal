@@ -1,5 +1,6 @@
 import type { VFC, MouseEvent } from "react";
 import { useHistory } from "react-router";
+import Button from "react-bootstrap/Button";
 
 export const ShopButton: VFC = () => {
   const history = useHistory();
@@ -9,5 +10,9 @@ export const ShopButton: VFC = () => {
     history.push("/");
   }
 
-  return <button onClick={handleClick}>Continue Shopping</button>;
+  return (
+    <Button variant="secondary" onClick={handleClick} size="sm">
+      Continue Shopping
+    </Button>
+  );
 };

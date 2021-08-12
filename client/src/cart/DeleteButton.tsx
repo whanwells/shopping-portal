@@ -1,17 +1,19 @@
 import type { VFC, MouseEvent } from "react";
+import Button from "react-bootstrap/Button";
 import { useMutation, useQueryClient } from "react-query";
 import { request } from "../request";
 import { useToken } from "../token";
-import type { CartItem } from "../types";
 
-interface ItemProps extends CartItem {}
+interface DeleteButtonProps {
+  cartItemId: number;
+}
 
-export const Item: VFC<ItemProps> = ({ id, product }) => {
+export const DeleteButton: VFC<DeleteButtonProps> = ({ cartItemId }) => {
   const { token, sub } = useToken();
   const queryClient = useQueryClient();
 
   const mutation = useMutation(async () => {
-    await request.delete(`/api/users/${sub}/cart/${id}`, { token });
+    await request.delete(`/api/users/${sub}/cart/${cartItemId}`, { token });
     queryClient.invalidateQueries(["cart", sub]);
   });
 
@@ -21,12 +23,8 @@ export const Item: VFC<ItemProps> = ({ id, product }) => {
   }
 
   return (
-    <>
-      <div>{product.name}</div>
-      <div>${product.msrp}</div>
-      <div>
-        <button onClick={handleDelete}>Delete</button>
-      </div>
-    </>
+    <Button variant="outline-danger" size="sm" onClick={handleDelete}>
+      Delete
+    </Button>
   );
 };

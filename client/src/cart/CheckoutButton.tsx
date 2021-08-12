@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { VFC, MouseEvent } from "react";
+import Button from "react-bootstrap/Button";
 import { useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router";
 import { request } from "../request";
@@ -27,8 +28,8 @@ export const CheckoutButton: VFC = () => {
   }
 
   return (
-    <button onClick={handleClick} disabled={disabled}>
+    <Button size="sm" onClick={handleClick} disabled={disabled}>
       Checkout
-    </button>
+    </Button>
   );
 };

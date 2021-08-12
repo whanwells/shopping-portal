@@ -6,6 +6,8 @@ export type Product = {
   stocked: boolean;
 };
 
+export type Cart = CartItem[];
+
 export type CartItem = {
   id: number;
   product: Omit<Product, "stocked">;
