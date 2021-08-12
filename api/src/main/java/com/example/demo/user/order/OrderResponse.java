@@ -13,7 +13,7 @@ public class OrderResponse {
     private final long id;
     private final OrderUserResponse user;
     private final LocalDateTime date;
-    private final List<OrderLineResponse> products;
+    private final List<OrderLineResponse> lines;
     private final double total;
 
     public static OrderResponse from(Order order) {
