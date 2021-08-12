@@ -3,11 +3,11 @@ import { useHistory } from "react-router";
 import { request } from "../request";
 import { useToken } from "../token";
 
-type ProductButtonProps = {
-  id: number;
+type CartButtonProps = {
+  productId: number;
 };
 
-export const ProductButton: VFC<ProductButtonProps> = ({ id }) => {
+export const CartButton: VFC<CartButtonProps> = ({ productId }) => {
   const { token, sub } = useToken();
   const history = useHistory();
 
@@ -16,7 +16,7 @@ export const ProductButton: VFC<ProductButtonProps> = ({ id }) => {
 
     const body = JSON.stringify({ quantity: 1 });
 
-    await request.put(`/api/users/${sub}/cart/${id}`, body, {
+    await request.put(`/api/users/${sub}/cart/${productId}`, body, {
       token,
       json: true,
     });

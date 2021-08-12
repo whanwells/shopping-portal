@@ -5,7 +5,7 @@ import { Spinner } from "../components";
 import { request } from "../request";
 import { useToken } from "../token";
 import type { Product } from "../types";
-import { ProductButton } from "./ProductButton";
+import { CartButton } from "./CartButton";
 
 type ProductRouteParams = {
   category: string;
@@ -39,7 +39,11 @@ export const ProductListing: VFC = () => {
             <div>{name}</div>
             <div>${msrp}</div>
             <div>
-              {stocked ? <ProductButton id={id} /> : <div>Out of Stock</div>}
+              {stocked ? (
+                <CartButton productId={id} />
+              ) : (
+                <div>Out of Stock</div>
+              )}
             </div>
           </li>
         ))}
