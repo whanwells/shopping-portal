@@ -2,11 +2,7 @@ import { Link } from "react-router-dom";
 import { useToken } from "../token";
 
 export const Navigation = () => {
-  const { token, setToken } = useToken();
-
-  function handleLogout() {
-    setToken(null);
-  }
+  const { token } = useToken();
 
   return (
     <nav>
@@ -20,9 +16,7 @@ export const Navigation = () => {
             <Link to="/cart">Cart</Link>
           </li>
           <li>
-            <a href="#" onClick={handleLogout}>
-              Logout
-            </a>
+            <Link to="/logout">Logout</Link>
           </li>
         </ul>
       )}

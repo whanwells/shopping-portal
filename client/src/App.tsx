@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Switch, Route } from "react-router-dom";
 import { Cart } from "./cart";
 import { Navigation, ProtectedRoute } from "./router";
-import { LoginForm } from "./login";
+import { LoginForm, Logout } from "./session";
 import { CategorySelection, ProductListing } from "./product";
 
 const queryClient = new QueryClient({
@@ -29,6 +29,9 @@ const App = () => {
         </ProtectedRoute>
         <ProtectedRoute path="/cart">
           <Cart />
+        </ProtectedRoute>
+        <ProtectedRoute path="/logout">
+          <Logout />
         </ProtectedRoute>
       </Switch>
     </QueryClientProvider>
