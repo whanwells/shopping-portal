@@ -4,6 +4,8 @@ import { Spinner } from "../components";
 import { request } from "../request";
 import { useToken } from "../token";
 import type { CartItem } from "../types";
+import { CheckoutButton } from "./CheckoutButton";
+import { ShopButton } from "./ShopButton";
 
 export const Cart: VFC = () => {
   const { token, sub } = useToken();
@@ -41,8 +43,11 @@ export const Cart: VFC = () => {
           </li>
         ))}
       </ul>
-
       <div>Total ${total}</div>
+      <div>
+        <ShopButton />
+        <CheckoutButton />
+      </div>
     </>
   );
 };
