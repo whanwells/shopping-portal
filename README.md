@@ -34,9 +34,9 @@ The following resources have been implemented:
 | `GET`    | `/api/users`                      | Returns a list of all users
 | `GET`    | `/api/users/:user`                | Returns a single user
 | `GET`    | `/api/users/:user/cart`           | Returns the items in the user's cart
-| `PUT`    | `/api/users/:user/cart/:product`  | Puts an item into the user's cart
+| `POST`   | `/api/users/:user/cart`           | Puts an item into the user's cart
 | `DELETE` | `/api/users/:user/cart`           | Deletes all items from the user's cart
-| `DELETE` | `/api/users/:user/cart/:product`  | Deletes a single item from the user's cart
+| `DELETE` | `/api/users/:user/cart/:item`     | Deletes a single item from the user's cart
 | `GET`    | `/api/users/:user/orders`         | Returns a list of the user's orders
 | `POST`   | `/api/users/:user/orders`         | Creates a new order from the items in the user's cart
 | `GET`    | `/api/users/:user/orders/:order`  | Returns a single user order
