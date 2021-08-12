@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Switch, Route } from "react-router-dom";
 import { Cart } from "./cart";
-import { Navigation, ProtectedRoute } from "./router";
+import { Navigation } from "./components";
+import { ProtectedRoute } from "./router";
 import { LoginForm, Logout } from "./session";
 import { CategorySelection, ProductListing } from "./shop";
 
