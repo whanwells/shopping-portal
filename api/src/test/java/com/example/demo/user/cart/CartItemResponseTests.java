@@ -24,14 +24,12 @@ class CartItemResponseTests {
     @BeforeEach
     void setup() {
         when(cartItem.getProduct()).thenReturn(product);
-        when(cartItem.getQuantity()).thenReturn(9);
     }
 
     @Test
     void fromItem() {
         var response = CartItemResponse.from(cartItem);
         assertThat(response.getProduct()).isInstanceOf(CartItemProductResponse.class);
-        assertThat(response.getQuantity()).isEqualTo(9);
     }
 
     @Test

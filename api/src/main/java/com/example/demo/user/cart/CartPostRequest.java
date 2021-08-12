@@ -3,7 +3,7 @@ package com.example.demo.user.cart;
 import lombok.Getter;
 
 @Getter
-public class CartItemPutRequest {
+public class CartPostRequest {
 
-    private Integer quantity;
+    private Long productId;
 }

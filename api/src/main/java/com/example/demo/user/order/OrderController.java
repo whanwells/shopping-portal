@@ -62,18 +62,13 @@ public class OrderController {
                 throw new BadRequestException("Product '" + item.getProduct().getName() + "' is out of stock");
             }
 
-            if (item.getQuantity() > item.getProduct().getQuantity()) {
-                throw new BadRequestException("Product '" + item.getProduct().getName() + "' quantity exceeds stock");
-            }
-
             // Reduce product quantity
-            item.getProduct().reduceQuantityBy(item.getQuantity());
+            item.getProduct().reduceQuantityBy(1);
             productService.save(item.getProduct());
 
             // Create an order line and add it to the order
             var orderLine = new OrderLine();
             orderLine.setProduct(item.getProduct());
-            orderLine.setQuantity(item.getQuantity());
             order.addLine(orderLine);
         }
 

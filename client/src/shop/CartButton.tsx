@@ -14,9 +14,9 @@ export const CartButton: VFC<CartButtonProps> = ({ productId }) => {
   async function handleClick(event: MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
 
-    const body = JSON.stringify({ quantity: 1 });
+    const body = JSON.stringify({ productId });
 
-    await request.put(`/api/users/${sub}/cart/${productId}`, body, {
+    await request.post(`/api/users/${sub}/cart`, body, {
       token,
       json: true,
     });

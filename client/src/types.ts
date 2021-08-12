@@ -7,6 +7,6 @@ export type Product = {
 };
 
 export type CartItem = {
+  id: number;
   product: Omit<Product, "stocked">;
-  quantity: number;
 };

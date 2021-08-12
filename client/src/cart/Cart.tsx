@@ -26,8 +26,7 @@ export const Cart: VFC = () => {
   }
 
   const total: number = data.reduce(
-    (total: number, item: CartItem) =>
-      total + item.product.msrp * item.quantity,
+    (total: number, item: CartItem) => total + item.product.msrp,
     0
   );
 
@@ -35,8 +34,8 @@ export const Cart: VFC = () => {
     <>
       <h1>Your Cart</h1>
       <ul>
-        {data.map(({ product }: CartItem) => (
-          <li key={product.id}>
+        {data.map(({ id, product }: CartItem) => (
+          <li key={id}>
             <div>{product.name}</div>
             <div>${product.msrp}</div>
             <div>Delete</div>

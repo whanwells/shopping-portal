@@ -13,13 +13,11 @@ public class OrderLineResponse {
 
     private final long id;
     private final ProductResponse product;
-    private final int quantity;
 
     public static OrderLineResponse from(OrderLine orderLine) {
         return new OrderLineResponse(
             orderLine.getId(),
-            ProductResponse.from(orderLine.getProduct()),
-            orderLine.getQuantity()
+            ProductResponse.from(orderLine.getProduct())
         );
     }
 

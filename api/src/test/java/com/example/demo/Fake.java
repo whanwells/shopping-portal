@@ -47,7 +47,6 @@ public class Fake {
         var item = new CartItem();
         item.setUser(user);
         item.setProduct(product);
-        item.setQuantity(9);
         return item;
     }
 

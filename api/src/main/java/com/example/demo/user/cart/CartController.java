@@ -9,6 +9,7 @@ import com.example.demo.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
@@ -36,11 +37,10 @@ public class CartController {
         return CartItemResponse.from(cartItemService.findByUserId(userId));
     }
 
-    @PutMapping("/{productId}")
-    public CartItemResponse put(
+    @PostMapping
+    public ResponseEntity<CartItemResponse> post(
         @PathVariable Long userId,
-        @PathVariable Long productId,
-        @RequestBody CartItemPutRequest request,
+        @RequestBody CartPostRequest request,
         Principal principal
     ) {
         ForbiddenException.throwIfPrincipalMismatch(principal, userId);
@@ -50,27 +50,22 @@ public class CartController {
             .orElseThrow(() -> new ResourceNotFoundException(User.class));
 
         // Does the product exist?
-        var product = productService.findById(productId)
+        var product = productService.findById(request.getProductId())
             .orElseThrow(() -> new BadRequestException("Product not valid"));
 
-        // Is the quantity valid?
-        if (request.getQuantity() < 1) {
-            throw new BadRequestException("Quantity must be above 0");
-        }
+        // Add the item to the cart
+        var cartItem = new CartItem();
+        cartItem.setUser(user);
+        cartItem.setProduct(product);
+        var cartItemId = cartItemService.save(cartItem);
 
-        // Does the product already exist in the cart?
-        var item = cartItemService.findByUserIdAndProductId(userId, productId)
-            .orElseGet(() -> {
-                // Nope, create a new item
-                var newItem = new CartItem();
-                newItem.setUser(user);
-                newItem.setProduct(product);
-                return newItem;
-            });
+        var location = ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/../users/{userId}/cart/{cartItemId}")
+            .buildAndExpand(userId, cartItemId)
+            .normalize()
+            .toUri();
 
-        item.setQuantity(request.getQuantity());
-        cartItemService.save(item);
-        return CartItemResponse.from(item);
+        return ResponseEntity.created(location).body(CartItemResponse.from(cartItem));
     }
 
     @DeleteMapping
@@ -86,20 +81,22 @@ public class CartController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{productId}")
-    public ResponseEntity<Void> deleteOne(@PathVariable Long userId, @PathVariable Long productId, Principal principal) {
+    @DeleteMapping("/{cartItemId}")
+    public ResponseEntity<Void> deleteOne(@PathVariable Long userId, @PathVariable Long cartItemId, Principal principal) {
         ForbiddenException.throwIfPrincipalMismatch(principal, userId);
 
-        // Does the user/product exist?
-        var item = cartItemService.findByUserIdAndProductId(userId, productId)
+        System.out.println(cartItemId);
+
+        // Does the cart item exist?
+        var cartItem = cartItemService.findById(cartItemId)
             .orElseThrow(ResourceNotFoundException::new);
 
-        // Does the user own the item?
-        if (!item.getUser().getId().equals(userId)) {
-            throw new ForbiddenException();
+        // Does the user own cart the item?
+        if (!cartItem.getUser().getId().equals(userId)) {
+            throw new ResourceNotFoundException();
         }
 
-        cartItemService.delete(item);
+        cartItemService.delete(cartItem);
         return ResponseEntity.noContent().build();
     }
 }

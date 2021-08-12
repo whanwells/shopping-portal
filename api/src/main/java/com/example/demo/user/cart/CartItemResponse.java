@@ -10,13 +10,13 @@ import java.util.stream.Collectors;
 @Getter
 public class CartItemResponse {
 
+    private final Long id;
     private final CartItemProductResponse product;
-    private final Integer quantity;
 
     public static CartItemResponse from(CartItem cartItem) {
         return new CartItemResponse(
-            CartItemProductResponse.from(cartItem.getProduct()),
-            cartItem.getQuantity()
+            cartItem.getId(),
+            CartItemProductResponse.from(cartItem.getProduct())
         );
     }
 

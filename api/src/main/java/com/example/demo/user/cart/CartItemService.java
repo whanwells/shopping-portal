@@ -22,10 +22,6 @@ public class CartItemService {
         return repository.findByUserId(userId);
     }
 
-    public Optional<CartItem> findByUserIdAndProductId(Long userId, Long productId) {
-        return repository.findByUserIdAndProductId(userId, productId);
-    }
-
     public Long save(CartItem cartItem) {
         return repository.save(cartItem).getId();
     }

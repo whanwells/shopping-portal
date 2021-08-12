@@ -38,12 +38,6 @@ class CartItemServiceTests {
     }
 
     @Test
-    void findByUserIdAndProductId() {
-        when(repository.findByUserIdAndProductId(1L, 1L)).thenReturn(Optional.of(cartItem));
-        assertThat(service.findByUserIdAndProductId(1L, 1L)).isPresent();
-    }
-
-    @Test
     void save() {
         when(repository.save(cartItem)).thenReturn(cartItem);
         when(cartItem.getId()).thenReturn(1L);
