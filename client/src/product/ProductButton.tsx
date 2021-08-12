@@ -5,16 +5,11 @@ import { useToken } from "../token";
 
 type ProductButtonProps = {
   id: number;
-  stocked: boolean;
 };
 
-export const ProductButton: VFC<ProductButtonProps> = ({ id, stocked }) => {
+export const ProductButton: VFC<ProductButtonProps> = ({ id }) => {
   const { token, sub } = useToken();
   const history = useHistory();
-
-  if (!stocked) {
-    return <span>Sold Out</span>;
-  }
 
   async function handleClick(event: MouseEvent<HTMLButtonElement>) {
     event.preventDefault();

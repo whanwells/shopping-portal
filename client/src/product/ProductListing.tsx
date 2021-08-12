@@ -39,7 +39,7 @@ export const ProductListing: VFC = () => {
             <div>{name}</div>
             <div>${msrp}</div>
             <div>
-              <ProductButton id={id} stocked={stocked} />
+              {stocked ? <ProductButton id={id} /> : <div>Out of Stock</div>}
             </div>
           </li>
         ))}
