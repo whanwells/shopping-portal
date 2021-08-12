@@ -23,7 +23,7 @@ export const Cart: VFC = () => {
   }
 
   if (!data.length) {
-    return <div>You're cart is empty.</div>;
+    return <div>Your cart is empty.</div>;
   }
 
   const total: number = data.reduce(
