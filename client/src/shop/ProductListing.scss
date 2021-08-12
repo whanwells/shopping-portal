@@ -1,0 +1,7 @@
+@import "~bootstrap/scss/bootstrap.scss";
+
+@include media-breakpoint-up(md) {
+  .product-list-col-right {
+    text-align: right;
+  }
+}

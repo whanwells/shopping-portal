@@ -1,4 +1,5 @@
 import type { VFC, MouseEvent } from "react";
+import Button from "react-bootstrap/Button";
 import { useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router";
 import { request } from "../request";
@@ -27,5 +28,9 @@ export const CartButton: VFC<CartButtonProps> = ({ productId }) => {
     mutation.mutate();
   }
 
-  return <button onClick={handleClick}>Add to Cart</button>;
+  return (
+    <Button size="sm" onClick={handleClick}>
+      Add to Cart
+    </Button>
+  );
 };
