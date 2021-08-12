@@ -16,6 +16,9 @@ class ProductResponseTests {
     @Mock
     private Product product;
 
+    @Mock
+    private Category category;
+
     @Test
     void from() {
         when(product.getId()).thenReturn(1L);
@@ -23,11 +26,14 @@ class ProductResponseTests {
         when(product.getReleaseDate()).thenReturn(LocalDate.of(2000, 1, 1));
         when(product.getMsrp()).thenReturn(9.99);
         when(product.isStocked()).thenReturn(true);
+        when(product.getCategory()).thenReturn(category);
+        when(category.getName()).thenReturn("foo");
 
         var response = ProductResponse.from(product);
 
         assertThat(response.getId()).isEqualTo(1);
         assertThat(response.getName()).isEqualTo("foo");
+        assertThat(response.getCategory()).isEqualTo("foo");
         assertThat(response.getReleaseDate()).isEqualTo(LocalDate.of(2000, 1, 1));
         assertThat(response.getMsrp()).isEqualTo(9.99);
         assertThat(response.isStocked()).isEqualTo(true);

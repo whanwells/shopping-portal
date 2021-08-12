@@ -11,20 +11,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final CategoryService categoryService;
     private final ProductService productService;
 
     @GetMapping
-    List<CategoryResponse> getAll(@RequestParam(defaultValue = "") String category) {
-        List<Category> categories;
+    List<ProductResponse> getAll(@RequestParam(defaultValue = "") String category) {
+        List<Product> products;
 
         if (!category.isBlank()) {
-            categories = categoryService.findByName(category);
+            products = productService.findByCategoryName(category);
         } else {
-            categories = categoryService.findAll();
+            products = productService.findAll();
         }
 
-        return CategoryResponse.from(categories);
+        return ProductResponse.from(products);
     }
 
     @GetMapping("/{productId}")

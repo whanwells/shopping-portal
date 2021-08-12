@@ -30,9 +30,6 @@ class ProductControllerTests extends BaseControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private CategoryService categoryService;
-
-    @MockBean
     private ProductService productService;
 
     @Mock
@@ -50,32 +47,31 @@ class ProductControllerTests extends BaseControllerTest {
     @Test
     @WithMockUser
     void getAll() throws Exception {
-        when(category.getName()).thenReturn("foo");
-        when(category.getProducts()).thenReturn(List.of(product));
         when(product.getId()).thenReturn(1L);
         when(product.getName()).thenReturn("foo");
         when(product.getReleaseDate()).thenReturn(LocalDate.of(2001, 1, 1));
         when(product.getMsrp()).thenReturn(9.99);
         when(product.isStocked()).thenReturn(true);
+        when(product.getCategory()).thenReturn(category);
+        when(category.getName()).thenReturn("foo");
 
-        when(categoryService.findAll()).thenReturn(List.of(category));
+        when(productService.findAll()).thenReturn(List.of(product));
 
         mockMvc.perform(get("/api/products"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.size()").value(1))
+            .andExpect(jsonPath("$[0].id").value(1))
+            .andExpect(jsonPath("$[0].name").value("foo"))
             .andExpect(jsonPath("$[0].category").value("foo"))
-            .andExpect(jsonPath("$[0].products.size()").value(1))
-            .andExpect(jsonPath("$[0].products[0].id").value(1))
-            .andExpect(jsonPath("$[0].products[0].name").value("foo"))
-            .andExpect(jsonPath("$[0].products[0].releaseDate").value("2001-01-01"))
-            .andExpect(jsonPath("$[0].products[0].msrp").value(9.99))
-            .andExpect(jsonPath("$[0].products[0].stocked").value(true));
+            .andExpect(jsonPath("$[0].releaseDate").value("2001-01-01"))
+            .andExpect(jsonPath("$[0].msrp").value(9.99))
+            .andExpect(jsonPath("$[0].stocked").value(true));
     }
 
     @Test
     @WithMockUser
     void getAllWithCategory() throws Exception {
-        when(categoryService.findByName("foo")).thenReturn(List.of());
+        when(productService.findByCategoryName("foo")).thenReturn(List.of());
 
         mockMvc.perform(get("/api/products?category=bar"))
             .andExpect(status().isOk())
@@ -91,11 +87,14 @@ class ProductControllerTests extends BaseControllerTest {
         when(product.getReleaseDate()).thenReturn(LocalDate.of(2001, 1, 1));
         when(product.getMsrp()).thenReturn(9.99);
         when(product.isStocked()).thenReturn(true);
+        when(product.getCategory()).thenReturn(category);
+        when(category.getName()).thenReturn("foo");
 
         mockMvc.perform(get("/api/products/1"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id").value(1))
             .andExpect(jsonPath("$.name").value("foo"))
+            .andExpect(jsonPath("$.category").value("foo"))
             .andExpect(jsonPath("$.releaseDate").value("2001-01-01"))
             .andExpect(jsonPath("$.msrp").value(9.99))
             .andExpect(jsonPath("$.stocked").value(true));

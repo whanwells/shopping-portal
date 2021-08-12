@@ -4,7 +4,7 @@ import { Cart } from "./cart";
 import { Navigation } from "./components";
 import { ProtectedRoute } from "./router";
 import { LoginForm, Logout } from "./session";
-import { CategorySelection, ProductListing } from "./shop";
+import { ProductListing } from "./shop";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,9 +23,6 @@ const App = () => {
           <LoginForm />
         </Route>
         <ProtectedRoute path="/" exact>
-          <CategorySelection />
-        </ProtectedRoute>
-        <ProtectedRoute path="/shop/:category">
           <ProductListing />
         </ProtectedRoute>
         <ProtectedRoute path="/cart">

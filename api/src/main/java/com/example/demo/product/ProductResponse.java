@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class ProductResponse {
     private final long id;
     private final String name;
+    private final String category;
     private final LocalDate releaseDate;
     private final double msrp;
     private final boolean stocked;
@@ -20,6 +21,7 @@ public class ProductResponse {
         return new ProductResponse(
             product.getId(),
             product.getName(),
+            product.getCategory().getName(),
             product.getReleaseDate(),
             product.getMsrp(),
             product.isStocked()
