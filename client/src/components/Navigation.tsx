@@ -10,7 +10,7 @@ export const Navigation = () => {
       {token && (
         <ul>
           <li>
-            <Link to="/">Products</Link>
+            <Link to="/">Shop</Link>
           </li>
           <li>
             <Link to="/cart">Cart</Link>
