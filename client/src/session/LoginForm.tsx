@@ -29,10 +29,9 @@ export const LoginForm: VFC = () => {
     setLoading(true);
 
     try {
-      const response = await request.post(
-        "/api/login",
-        new URLSearchParams(data)
-      );
+      const response = await request.post("/api/login", {
+        body: new URLSearchParams(data),
+      });
       const { token } = await response.json();
       setToken(token);
     } catch (e) {
