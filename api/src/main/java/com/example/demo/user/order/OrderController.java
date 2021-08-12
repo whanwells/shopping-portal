@@ -56,10 +56,10 @@ public class OrderController {
         var order = new Order();
         order.setUser(user);
 
-        // Make sure each product is in stock
         for (var item : items) {
+            // Don't add out of stock items
             if (!item.getProduct().isStocked()) {
-                throw new BadRequestException("Product '" + item.getProduct().getName() + "' is out of stock");
+                continue;
             }
 
             // Reduce product quantity
